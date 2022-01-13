@@ -1,0 +1,21 @@
+.ItemForm input{
+height: 5vh;
+margin-left: 2vh;
+border-radius: 5vh;
+padding-left: 2vh;
+}
+.add_song{
+    top: 1.3vh;
+    background: #fff url('../../../images/plus.png') center center/cover no-repeat;
+    background-size:cover;
+    height: 5vh; 
+    width: 5vh;
+    border: none;
+    position: relative;
+    
+}
+button:hover{
+    cursor: pointer;
+    opacity: 0.5;
+    
+}

@@ -1,0 +1,19 @@
+.SongList{
+    position: relative;
+    top: 7vh;
+    left: 60%;
+    border: 1px solid black;    
+    width: 30%;
+}   
+.SongList #display{
+background: #fff url("../../../images/down-arrow.png") center center/cover no-repeat;
+background-size:cover;
+height: 5vh; 
+width: 5vh;
+border: none;
+margin-top: auto;
+padding-top: 20px;
+}
+.SongList .hide{
+    transform: rotate(180deg);
+}
