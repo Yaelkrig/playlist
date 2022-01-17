@@ -3,13 +3,13 @@ import Plyr from "plyr-react";
 import { useEffect, useRef, useState } from 'react';
 
 
-const Player = ({ urls, index, handleEnded }) => {
-    const [ended, setEnded] = useState(false)
+const Player = ({ urls, url }) => {
+    // const [ended, setEnded] = useState(false)
     const videoSrc = {
         type: "video",
         sources: [
             {
-                src: urls[index],
+                src: url,
                 provider: "youtube"
             }
         ],
@@ -28,6 +28,7 @@ const Player = ({ urls, index, handleEnded }) => {
                 options={{
                     autoplay: true,
                     ratio: '5:3',
+
                 }}
             />
 

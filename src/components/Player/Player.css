@@ -1,9 +1,9 @@
-.Player{
- position: absolute;   
- bottom : 12vh;
- height: 50vh ;
- width: 100vh;
- left: 10vh;
- --plyr-color-main: #FF7272;
+.Player{ 
+    position: absolute;
+ bottom : 70%;
+ height: 15% ;
+ width: 25%;
+margin-left: 15%;
+ --plyr-color-main: #e76796;;
  --plyr-control-radius:15vh;
 }

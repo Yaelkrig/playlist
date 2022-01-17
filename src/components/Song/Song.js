@@ -1,13 +1,13 @@
 import './Song.css'
-const Song = ({ id, name, artist, url, removeSong, playSong, index }) => {
+const Song = ({ id, name, imgUrl, artist, url, removeSong, playSong, index }) => {
 
     return (
         <div key={id} className="Song" id={id}>
-            {/* <img className='playing' url="../../../images/music.gif" alt='playing' /> */}
-            <div className='description'>
-                <span className='name'>{name}</span>
-                <span className='artist'> By- {artist}</span>
-            </div>
+            <img alt={name} src={imgUrl} />
+
+            <span className='name'>{name}</span>
+            <span className='artist'> By- {artist}</span>
+
             <div className='buttons'>
 
                 <button className='remove_button'
@@ -16,7 +16,7 @@ const Song = ({ id, name, artist, url, removeSong, playSong, index }) => {
                     }}></button>
                 <button className='play_button'
                     onClick={() => {
-                        playSong(index)
+                        playSong(url)
                     }}
                 ></button>
             </div>

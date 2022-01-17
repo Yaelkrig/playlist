@@ -1,9 +1,12 @@
 import './Header.css'
 const Header = () => {
     return (
-        <h1 className="Header">
-            Playlist
-        </h1>
+        <div className='Header'>
+            <div className='logo'></div>
+            <h1 >
+                Playlist
+            </h1>
+        </div>
     )
 }
 export default Header;

@@ -1,6 +1,22 @@
+.ItemForm{
+    width: 50%;
+    text-align: left;
+    margin-left: 60%;
+}
+.ItemForm .search{
+    background: #fff url('../../../images/loupe.png') center center/cover no-repeat;
+    background-size:cover;
+    height: 3vh; 
+    width: 3vh;
+    border: none;
+    position: relative;
+    transform: rotate(270deg);
+}
 .ItemForm input{
-height: 5vh;
-margin-left: 2vh;
+    width: 40%;
+height: 3vh;
+margin-left: 3vh;
+margin-right: 2vh;
 border-radius: 5vh;
 padding-left: 2vh;
 }
@@ -8,8 +24,8 @@ padding-left: 2vh;
     top: 1.3vh;
     background: #fff url('../../../images/plus.png') center center/cover no-repeat;
     background-size:cover;
-    height: 5vh; 
-    width: 5vh;
+    height: 3vh; 
+    width: 3vh;
     border: none;
     position: relative;
     

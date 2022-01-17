@@ -1,10 +1,24 @@
 .SongList{
-    position: relative;
-    top: 7vh;
-    left: 60%;
-    border: 1px solid black;    
-    width: 30%;
-}   
+    position: absolute;
+    margin-top: 10%;
+   margin-left: 10% ;   
+    width: 45%;
+    font-family: 'Courgette', cursive;
+}  
+.SongList .playlist_header {
+    display: grid;
+    grid-template-columns: 6fr 1fr ;
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.25);
+}
+h3{
+
+    display: inline;
+    font-size: xx-large;
+}
+.SongList .songs_container{
+  
+    margin-top: 5%;
+}
 .SongList #display{
 background: #fff url("../../../images/down-arrow.png") center center/cover no-repeat;
 background-size:cover;
@@ -12,7 +26,7 @@ height: 5vh;
 width: 5vh;
 border: none;
 margin-top: auto;
-padding-top: 20px;
+margin-left: 70%;
 }
 .SongList .hide{
     transform: rotate(180deg);

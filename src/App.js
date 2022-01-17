@@ -5,59 +5,94 @@ import Header from './components/Header/Header';
 import ItemForm from './components/ItemForm/ItemForm';
 import Player from './components/Player/Player';
 import SongList from './components/SongList/SongList';
+import SideBar from './components/SideBar/SideBar';
+import SearchResults from "./components/SearchResults/SearchResults"
+import youtube from './apis/youtube';
+import ResultContext from './Contexts/ResultContext';
+
 
 const App = () => {
   const songsList = [
-    { id: 1, name: 'Brit', artist: 'Hol', url: 'Peo8sewY1K4' },
-    { id: 2, name: 'Tule', artist: 'Blue Pill', url: 'UMNI_XAS1wc' },
-    { id: 3, name: 'Isha Harsina', artist: 'Miri Mesika', url: 'K8g3iu7Hu4Q' },
-    { id: 4, name: 'Ein Sof Lalaila', artist: 'Kern Peles', url: '-nmPdZDg4Ws' },
-    { id: 5, name: 'Hallelojah', artist: 'The Next Star', url: 'irEpp0NsgkI' },
+    {
+      artist: "אביחי הולנדר avihai hollender",
+      id: "Peo8sewY1K4",
+      imgUrl: "https://i.ytimg.com/vi/Peo8sewY1K4/default.jpg",
+      name: "אביחי הולנדר - ברית | Avihai Hollender - Britt",
+      url: "Peo8sewY1K4"
+    },
+    {
+      artist: "Blue Pill Band",
+      id: "UMNI_XAS1wc",
+      imgUrl: "https://i.ytimg.com/vi/UMNI_XAS1wc/default.jpg",
+      name: "הפיל הכחול - טיול",
+      url: "UMNI_XAS1wc"
+    },
+    {
+      artist: "Beit Avi Chai - בית אבי חי",
+      id: "xc0jPvkX-Nc",
+      imgUrl: "https://i.ytimg.com/vi/xc0jPvkX-Nc/default.jpg",
+      name: "יונתן בלומנפלד וענת מלמוד - את הלילה שלך מרגיעים || Made in ג&#39;רוזלם",
+      url: "xc0jPvkX-Nc"
+    },
+    {
+      artist: "Keren Peles - קרן פלס",
+      id: "EqPy5SCrD-A",
+      imgUrl: "https://i.ytimg.com/vi/EqPy5SCrD-A/default.jpg",
+      name: "קרן פלס - ימים אחרים",
+      url: "EqPy5SCrD-A"
+    },
   ]
   const [songs, setSongs] = useState(songsList)
   const [newSong, setNewSong] = useState("")
-  const [songsUrl, setSongsUrl] = useState(songs.map(song => `https://www.youtube.com/watch?v=${song.url}`))
-  const [songIndex, setSongIndex] = useState(0)
-  const idRef = useRef(songs.length)
+  const [songPlayer, setSongPlayer] = useState(songs[0].url)
   const inputRef = useRef(null)
+  const [results, setResults] = useState([])
 
 
   useEffect(() => {
     inputRef.current.focus()
   })
-  const addSong = (inputValue, inputArtist, inputUrl) => {
-    idRef.current++
-    setSongs([...songs, {
-      id: idRef.current,
-      name: inputValue,
-      artist: inputArtist,
-      url: inputUrl
-    }])
 
-    setSongsUrl([...songsUrl, `https://www.youtube.com/watch?v=${inputUrl}`])
+  const addSong = (details) => {
+    setSongs([...songs, {
+      id: details.id.videoId,
+      name: details.snippet.title,
+      artist: details.snippet.channelTitle,
+      url: details.id.videoId,
+      imgUrl: details.snippet.thumbnails.default.url
+    }])
     setNewSong("")
+    console.log(songs);
+  }
+
+  const searchSong = async (forSearch) => {
+    const res = await youtube.get('/search', {
+      params: {
+        q: forSearch
+      }
+    })
+    setResults(res.data.items)
 
   }
-  const playSong = (index) => {
-    setSongIndex(index)
 
+  const playSong = (url) => {
+    setSongPlayer(url)
   }
 
 
   const removeSong = (id) => {
     setSongs(songs.filter(song => song.id !== id))
   }
-  const handleEnded = () => {
-    console.log('ended');
-    setSongIndex(songIndex + 1)
-  }
+
 
   return (
     <div className="App">
       <Header />
-      <ItemForm addSong={addSong} newSong={newSong} inputRef={inputRef} />
+      <SideBar />
+      <Player url={songPlayer} />
+      <ItemForm addSong={addSong} newSong={newSong} inputRef={inputRef} searchSong={searchSong} />
+      <SearchResults results={results} playSong={playSong} addSongToPlaylist={addSong} />
       <SongList songs={songs} removeSong={removeSong} playSong={playSong} />
-      <Player urls={songsUrl} index={songIndex} handleEnded={handleEnded} />
     </div>
   );
 }

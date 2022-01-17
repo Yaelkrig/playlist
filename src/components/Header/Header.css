@@ -1,7 +1,24 @@
-.Header{
-    font-size: 10vh ;
+.Header {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    text-align: left;
+    margin-left: 3%;
     margin-bottom: 2%;
-    margin-top: 0;
-    color: #FF7272;
+    margin-top: 2%;
+    color: #e76796;
+    width: 25%;
+}
+.Header h1{ 
+   
     font-family: 'Courgette', cursive;
+    font-size: 300% ;
+}
+.Header .logo{
+    /* display: inline; */
+    background: #fff url('../../../images/music.png') center center/cover no-repeat;
+    background-size:cover;
+    height: 6vh; 
+    width: 6vh;
+    border: none;
+    position: relative;
 }
