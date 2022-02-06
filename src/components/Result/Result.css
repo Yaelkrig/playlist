@@ -3,16 +3,28 @@
     font-family: 'Nanum Gothic', sans-serif;
     line-height: 1.3;
     display: grid;
-    grid-template-columns: 5fr 20fr 5fr 2fr;
+    grid-template-columns: 7fr 20fr 3fr 2fr;
+}
+.Result .result_img{
+    border-image-slice: 10;
+    border-radius: 50%;
+    height: 100%;
+    width: 50%;
+    aspect-ratio: 1 / 1;
 }
 .Result .title{
-font-size: x-large;
+font-size: large;  
+font-family: 'Nanum Gothic', sans-serif;
+}
+.Result button{
+    margin-top: 20%;
 }
 .Result .addToPlaylist{
-    background: #fff url('../../../images/plus.png') center center/cover no-repeat;
+    margin-top: 25%;
+    background:  url('../../../images/plus.png') center center/cover no-repeat;
     background-size:cover;
-    height: 5vh; 
-    width: 5vh;
+    height: 3vh; 
+    width: 3vh;
     border: none;
     position: relative;
 }

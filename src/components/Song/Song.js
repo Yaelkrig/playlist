@@ -1,26 +1,54 @@
+import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import './Song.css'
-const Song = ({ id, name, imgUrl, artist, url, removeSong, playSong, index }) => {
-
+import DeleteIcon from '@mui/icons-material/Delete';
+const Song = ({ id, title, imgUrl, artist, url, removeSong, playSong, index }) => {
     return (
-        <div key={id} className="Song" id={id}>
-            <img alt={name} src={imgUrl} />
+        <ListItem
+            secondaryAction={
+                <IconButton edge="end" aria-label="delete">
+                    <DeleteIcon className='delete_bt'
+                        onClick={() => {
+                            console.log("delete", url);
+                            removeSong(url);
+                        }}
+                    />
+                </IconButton>
+            }
+        >
+            <span className='play_song'
+                onClick={() => {
+                    console.log(url);
+                    playSong(url)
+                }}
+            >
+                <ListItemAvatar >
+                    <Avatar
+                        sx={{ width: 70, height: 70 }}
+                    >
+                        <img className='song_img' alt={title} src={imgUrl} />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText className="description" />{title}
+            </span>
+        </ListItem >
 
-            <span className='name'>{name}</span>
-            <span className='artist'> By- {artist}</span>
 
-            <div className='buttons'>
 
-                <button className='remove_button'
-                    onClick={() => {
-                        removeSong(id)
-                    }}></button>
-                <button className='play_button'
-                    onClick={() => {
-                        playSong(url)
-                    }}
-                ></button>
-            </div>
-        </div >
+        // <div key={id} className="Song" id={id}>
+        //     <img className='song_img' alt={title} src={imgUrl} />
+        //     <span className='name'>{title}</span>
+        //     <div className='buttons'>
+        //         <button className='remove_button'
+        //             onClick={() => {
+        //                 removeSong(id)
+        //             }}></button>
+        //         <button className='play_button'
+        //             onClick={() => {
+        //                 playSong(url)
+        //             }}
+        //         ></button>
+        //     </div>
+        // </div >
     )
 }
 export default Song;

@@ -1,3 +1,4 @@
+import { Input } from '@mui/material'
 import { useState } from 'react/cjs/react.development'
 import './ItemForm.css'
 
@@ -6,11 +7,19 @@ const ItemForm = ({ addSong, inputRef, searchSong }) => {
 
     return <div className='ItemForm'>
         <form>
-            <input ref={inputRef}
-                placeholder='Enter song'
-                type="text"
+            <Input
+                ref={inputRef}
+                id="search"
+                label="Search"
+                // value={setUsernameValue(usernameValue)}
+                name="search"
+                autoComplete="search"
                 onChange={(e) => { setValue(e.target.value) }}
-                value={value}></input>
+                value={value}
+                color='success'
+            >
+
+            </Input>
 
             <button className='search'
                 onClick={(e) => {
@@ -21,37 +30,5 @@ const ItemForm = ({ addSong, inputRef, searchSong }) => {
 
     </div>
 
-    // return <div className='ItemForm'>
-    //     <form >
-    //         <input
-    //             ref={inputRef}
-    //             placeholder='Enter song'
-    //             type="text"
-    //             onChange={(e) => { setValue(e.target.value) }}
-    //             value={value}
-    //         ></input>
-    //         <input
-    //             placeholder='Enter artist'
-    //             type="text"
-    //             onChange={(e) => { setArtist(e.target.value) }}
-    //             value={artist}
-    //         ></input>
-    //         <input
-    //             placeholder='Enter url'
-    //             type="text"
-    //             onChange={(e) => { setUrl(e.target.value) }}
-    //             value={url}
-    //         ></input>
-    //         <button className='add_song'
-    //             onClick={(e) => {
-    //                 e.preventDefault()
-    //                 addSong(value, artist, url)
-    //                 setValue("")
-    //                 setUrl("")
-
-    //             }}></button>
-
-    //     </form>
-    // </div>
 }
 export default ItemForm;

@@ -1,6 +1,6 @@
 import '../Player/Player.css'
 import Plyr from "plyr-react";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 
 const Player = ({ urls, url }) => {
@@ -28,10 +28,8 @@ const Player = ({ urls, url }) => {
                 options={{
                     autoplay: true,
                     ratio: '5:3',
-
                 }}
             />
-
         </div >
     )
 }
