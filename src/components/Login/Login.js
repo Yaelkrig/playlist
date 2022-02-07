@@ -50,6 +50,7 @@ export default function LogIn() {
     const handleSubmit = (event) => {
 
         const callServer = (loginDetails) => {
+            localStorage.removeItem("accessToken");
             fetch('http://localhost:3001/users/login', {
                 method: 'POST',
                 headers: {
@@ -59,12 +60,12 @@ export default function LogIn() {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    console.log(data);
                     if (data.message === 'dont exist' || data.message === 'invalid credential') {
                         setPassword("");
-
                     } else {
                         localStorage.setItem('accessToken', data)
-                        navigate("/Home")
+                        navigate("/")
                     }
                 })
         }

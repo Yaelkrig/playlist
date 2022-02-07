@@ -48,27 +48,8 @@ export default function SignUp() {
     let logUpDetails = {};
     const navigate = useNavigate();
 
-    const checkAvailable = (logUpDetails) => {
-        fetch("http://localhost:3001/users/available", {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(logUpDetails),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data.message)
-                if (data.message === "internal server error") {
-                    console.log(data.message);
-                } else if (data.message === 'already exist') {
-                    console.log('try again');
-                } else if (data.message === 'available') {
-                    logUp(logUpDetails);
-                }
-            })
-    }
     const logUp = (logUpDetails) => {
+        localStorage.removeItem("accessToken");
         fetch("http://localhost:3001/users/register", {
             method: 'POST',
             headers: {
@@ -77,7 +58,7 @@ export default function SignUp() {
             body: JSON.stringify(logUpDetails),
         })
             .then((res) => res.json())
-            .then((data) => localStorage.setItem('accessToken', data))
+            .then((data) => localStorage.setItem('accessToken', data.accessToken))
         navigate('/')
     }
 
@@ -90,7 +71,7 @@ export default function SignUp() {
             password: data.get('password'),
             email: data.get('email'),
         }
-        checkAvailable(logUpDetails)
+        logUp(logUpDetails)
         // ? logUp(logUpDetails) : console.log("try again");
 
 

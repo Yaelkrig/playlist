@@ -1,18 +1,20 @@
-import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material';
 import './Song.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 const Song = ({ id, title, imgUrl, artist, url, removeSong, playSong, index }) => {
     return (
         <ListItem
             secondaryAction={
-                <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon className='delete_bt'
-                        onClick={() => {
-                            console.log("delete", url);
-                            removeSong(url);
-                        }}
-                    />
-                </IconButton>
+                <Tooltip title="delete song" placement="right-start">
+                    <IconButton edge="end" aria-label="delete">
+                        <DeleteIcon className='delete_bt'
+                            onClick={() => {
+                                console.log("delete", url);
+                                removeSong(url);
+                            }}
+                        />
+                    </IconButton>
+                </Tooltip>
             }
         >
             <span className='play_song'

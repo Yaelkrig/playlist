@@ -30,10 +30,10 @@ const Home = () => {
     const [results, setResults] = useState([])
     const [currentUser, setCurrentUser] = useState("Guest")
     const userToken = { accessToken: localStorage.accessToken }
-
+    const [playlists, setPlaylists] = useState([]);
 
     const userLoged = () => {
-        // setUserToken({ accessToken: localStorage.accessToken })
+        // to check if this is the better sollution
         if (userToken !== {}) {
             fetch('http://localhost:3001/users', {
                 method: 'POST',
@@ -50,17 +50,28 @@ const Home = () => {
     }
 
     useEffect(() => {
-        fetch('http://localhost:3001/songs', {
-            method: 'GET',
-            headers: {
-                "Content-type": "application/json",
-            },
-        })
-            .then(res => res.json())
-            .then(songs => {
-                setSongs([...songs])
-                setSongPlayer(songs[0].url);
+        try {
+            fetch('http://localhost:3001/playlists/uesr', {
+                method: 'GET',
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                },
             })
+                .then(res => res.json())
+                .then(songs => {
+                    if (songs.message[0] === undefined) return;
+                    console.log(songs.message);
+                    songs.message.map(playlist => {
+                        return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
+                    })
+                    console.log(playlists);
+                    setSongPlayer(playlists[0].songs[0].url)
+                })
+
+        } catch (e) {
+            console.log(e);
+        }
 
     }, [])
 
@@ -73,32 +84,45 @@ const Home = () => {
 
 
     const addSong = (details) => {
-        fetch('http://localhost:3001/songs',
-            {
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify({
-                    id: details.id.videoId,
-                    title: details.snippet.title,
-                    artist: details.snippet.channelTitle,
-                    url: details.id.videoId,
-                    imgUrl: details.snippet.thumbnails.default.url
-                }),
-            })
-            .then(res => res.json())
-            .then(data => console.log(data))
-
-        setSongs([...songs, {
+        console.log({
             id: details.id.videoId,
             title: details.snippet.title,
             artist: details.snippet.channelTitle,
             url: details.id.videoId,
-            imgUrl: details.snippet.thumbnails.default.url
-        }])
-        setNewSong("")
+            imgUrl: details.snippet.thumbnails.default.url,
+            playlist: "6200f13f47b5e6904b48ed0b"
+        });
+        try {
+            fetch('http://localhost:3001/songs/add',
+                {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                    },
+                    body: JSON.stringify({
+                        id: details.id.videoId,
+                        title: details.snippet.title,
+                        artist: details.snippet.channelTitle,
+                        url: details.id.videoId,
+                        imgUrl: details.snippet.thumbnails.default.url,
+                        playlist: "6200f13f47b5e6904b48ed0b"
+                    }),
+                })
+                .then(res => res.json())
+                .then(data => {
+                    playlists.map(playlist => {
+                        return playlist.id === "6200f13f47b5e6904b48ed0b" ? playlist.songs.push(data) : console.log('error');
+                    })
+                    console.log("data", data);
+                    setSongs([...songs, data])
+                }
+                );
 
+            setNewSong("")
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const searchSong = async (forSearch) => {
@@ -133,7 +157,7 @@ const Home = () => {
                 <Player url={songPlayer} />
                 <ItemForm addSong={addSong} newSong={newSong} inputRef={inputRef} searchSong={searchSong} />
                 <SearchResults results={results} playSong={playSong} addSongToPlaylist={addSong} />
-                <SongList songs={songs} removeSong={removeSong} playSong={playSong} />
+                <SongList songs={songs} lists={playlists} removeSong={removeSong} playSong={playSong} />
                 <About />
             </div>
         </ThemeProvider>
