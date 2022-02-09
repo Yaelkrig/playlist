@@ -20,7 +20,10 @@
 }
 .SongList .add_container{
     margin-top: 10%;
+    margin-left: 10%;
 }
+
+
 h3{
     display: inline;
     font-size: xx-large;

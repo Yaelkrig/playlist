@@ -5,23 +5,19 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  // useParams,
 } from "react-router-dom";
 import SignUp from './components/SignUp/SignUp';
 
-const App = () => {
+const App = () => (
+  <Router className="App">
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route exact path="/Login" element={<Login />} />
+      <Route exact path="/SignUp" element={<SignUp />} />
+    </Routes>
+  </Router>
+)
 
-
-  return (
-    <Router className="App">
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/Login" element={<Login />} />
-        <Route exact path="/SignUp" element={<SignUp />} />
-      </Routes>
-    </Router>
-  )
-}
 
 
 export default App;

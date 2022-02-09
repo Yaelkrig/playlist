@@ -17,7 +17,7 @@ const Player = ({ urls, url }) => {
     };
     const plyrRef = useRef(null);
 
-    useEffect(() => console.log(plyrRef.current.plyr))
+    //useEffect(() => console.log(plyrRef.current.plyr))
     // plyrRef.current.plyr.on('ended', () => { console.log('end'); })
     return (
         <div className='Player'  >

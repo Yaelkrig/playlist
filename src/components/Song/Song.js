@@ -6,13 +6,12 @@ const Song = ({ id, title, imgUrl, artist, url, removeSong, playSong, index }) =
         <ListItem
             secondaryAction={
                 <Tooltip title="delete song" placement="right-start">
-                    <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon className='delete_bt'
-                            onClick={() => {
-                                console.log("delete", url);
-                                removeSong(url);
-                            }}
-                        />
+                    <IconButton edge="end" aria-label="delete"
+                        onClick={() => {
+                            console.log("delete", url);
+                            removeSong(url);
+                        }}>
+                        <DeleteIcon className='delete_bt' />
                     </IconButton>
                 </Tooltip>
             }

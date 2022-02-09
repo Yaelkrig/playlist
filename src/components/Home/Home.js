@@ -11,6 +11,8 @@ import youtube from '../../apis/youtube';
 import About from '../About/About';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
+import Context from '@mui/base/TabsUnstyled/TabsContext';
+import removeContext from '../../Contexts/removeContext';
 // import ResultContext from './Contexts/ResultContext';
 const theme = createTheme({
     palette: {
@@ -29,51 +31,46 @@ const Home = () => {
     const inputRef = useRef(null)
     const [results, setResults] = useState([])
     const [currentUser, setCurrentUser] = useState("Guest")
-    const userToken = { accessToken: localStorage.accessToken }
+    const userToken = localStorage.accessToken
     const [playlists, setPlaylists] = useState([]);
+    const [rememberUser, setRememberUser] = useState(false);
 
     const userLoged = () => {
         // to check if this is the better sollution
-        if (userToken !== {}) {
-            fetch('http://localhost:3001/users', {
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(userToken),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setCurrentUser(data.username)
-                })
+        console.log(userToken);
+        if (userToken) {
+            setCurrentUser(JSON.parse(atob(userToken.split(".")[1])).username)
         }
     }
-
     useEffect(() => {
-        try {
-            fetch('http://localhost:3001/playlists/uesr', {
-                method: 'GET',
-                headers: {
-                    "Content-type": "application/json",
-                    "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
-                },
-            })
-                .then(res => res.json())
-                .then(songs => {
-                    if (songs.message[0] === undefined) return;
-                    console.log(songs.message);
-                    songs.message.map(playlist => {
-                        return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
-                    })
-                    console.log(playlists);
-                    setSongPlayer(playlists[0].songs[0].url)
+        if (!playlists[0]) {
+            try {
+                fetch('http://localhost:3001/playlists/uesr', {
+                    method: 'GET',
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `bearer ${userToken}`
+                    },
                 })
+                    .then(res => res.json())
+                    .then(songs => {
+                        if (songs.message[0] === undefined) return;
+                        console.log(songs.message);
+                        songs.message.map(playlist => {
+                            return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
+                        })
+                        console.log("^^^^^^^^^^^^^^^^^^^^^", playlists);
+                        setSongPlayer(songs.message[0].songs[0].url)
+                    })
+                if (!rememberUser) {
+                    return localStorage.removeItem("accessToken")
+                }
 
-        } catch (e) {
-            console.log(e);
+            } catch (e) {
+                console.log(e);
+            }
         }
-
-    }, [])
+    }, [playlists])
 
     useEffect(() => {
         inputRef.current.focus()
@@ -82,6 +79,7 @@ const Home = () => {
         userLoged()
     }, [userToken])
 
+    console.log(currentUser);
 
     const addSong = (details) => {
         console.log({
@@ -138,9 +136,6 @@ const Home = () => {
         setSongPlayer(url)
     }
 
-    const removeSong = (id) => {
-        setSongs(songs.filter(song => song.id !== id))
-    }
     const handleLogOut = () => {
         console.log('from home');
         localStorage.removeItem("accessToken");
@@ -157,8 +152,12 @@ const Home = () => {
                 <Player url={songPlayer} />
                 <ItemForm addSong={addSong} newSong={newSong} inputRef={inputRef} searchSong={searchSong} />
                 <SearchResults results={results} playSong={playSong} addSongToPlaylist={addSong} />
-                <SongList songs={songs} lists={playlists} removeSong={removeSong} playSong={playSong} />
-                <About />
+                <removeContext.Provider value={{ setPlaylists }}>
+                    <SongList songs={songs} lists={playlists} playSong={playSong} />
+                </removeContext.Provider>
+                <div className='about'>
+                    <About />
+                </div>
             </div>
         </ThemeProvider>
     );

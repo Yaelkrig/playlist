@@ -1,11 +1,13 @@
-import { Grid, Input, Tooltip } from "@mui/material";
+import { Grid, IconButton, Input, Tooltip } from "@mui/material";
 import { useState } from "react/cjs/react.development";
 import Song from "../Song/Song";
 import './SongList.css'
 import AddIcon from '@mui/icons-material/Add';
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import removeContext from "../../Contexts/removeContext";
 
-const SongList = ({ removeSong, playSong, lists }) => {
+const SongList = ({ playSong, lists }) => {
+    const { setPlaylists } = useContext(removeContext)
     const [display, setDisplay] = useState(true);
     const [playlistName, setPlaylistName] = useState("")
     const newPlaylistRef = useRef(null);
@@ -21,6 +23,31 @@ const SongList = ({ removeSong, playSong, lists }) => {
                     body: JSON.stringify({
                         title: playlistName,
                         songs: []
+                    }),
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    setPlaylists(prePlaylists => [...prePlaylists, data.message]);
+                }
+                );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    const removeSong = () => {
+        setPlaylists(prePlaylists => prePlaylists.map(list => { return console.log(list); }))
+        try {
+            fetch('http://localhost:3001/playlists/deleteSong',
+                {
+                    method: 'DELETE',
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                    },
+                    body: JSON.stringify({
+                        playlistId: "",
+                        songId: ""
                     }),
                 })
                 .then(res => res.json())
@@ -47,11 +74,12 @@ const SongList = ({ removeSong, playSong, lists }) => {
                         color='success'
                     ></Input>
                     <Tooltip title="create playlist" placement="right-start">
-                        <AddIcon className="add_playlist" fontSize="large"
-                            onClick={() => {
-                                addPlaylist();
-                                setPlaylistName("");
-                            }} />
+                        <IconButton onClick={() => {
+                            addPlaylist();
+                            setPlaylistName("");
+                        }}>
+                            <AddIcon className="add_playlist" fontSize="large" />
+                        </IconButton>
                     </Tooltip>
                 </div>
                 {lists.map((list, index) => {

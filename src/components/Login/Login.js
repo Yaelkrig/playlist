@@ -1,5 +1,5 @@
 import './Login.css'
-import { Button, createTheme, TextField } from '@mui/material'
+import { Button, Checkbox, createTheme, FormControlLabel, TextField } from '@mui/material'
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useNavigate, Link as LinkUp } from 'react-router-dom';
@@ -40,9 +40,8 @@ function Copyright(props) {
     );
 }
 
-
 export default function LogIn() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     let LoginDetails = {};
@@ -60,9 +59,10 @@ export default function LogIn() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
+                    console.log(data.message);
                     if (data.message === 'dont exist' || data.message === 'invalid credential') {
                         setPassword("");
+
                     } else {
                         localStorage.setItem('accessToken', data)
                         navigate("/")
@@ -114,6 +114,7 @@ export default function LogIn() {
                             name="username"
                             autoComplete="username"
                             autoFocus
+                            onError={(e) => { console.log(e); }}
                         />
                         <TextField
                             value={password}
@@ -128,11 +129,13 @@ export default function LogIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+
                         />
-                        {/* <FormControlLabel
+                        <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
-                        /> */}
+                            onChange={(e) => console.log(e.target.checked)}
+                        />
                         <Button
                             type="submit"
                             fullWidth
