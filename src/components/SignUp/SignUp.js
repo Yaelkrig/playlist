@@ -1,5 +1,6 @@
 import "./SignUp.css"
 import { useNavigate, Link as LinkUp } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -18,6 +19,8 @@ import Header from "../Header/Header";
 import About from "../About/About";
 import SideBar from "../SideBar/SideBar";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import axios from "axios";
+import { useState } from "react";
 
 const theme = createTheme({
     palette: {
@@ -43,43 +46,39 @@ function Copyright(props) {
     );
 }
 
-
 export default function SignUp() {
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        reset,
+        formState: { errors },
+    } = useForm();
+    const [isSignUp, setIsSignUp] = useState(true)
     let logUpDetails = {};
     const navigate = useNavigate();
 
-    const logUp = (logUpDetails) => {
+    const onSubmit = () => {
         localStorage.removeItem("accessToken");
-        fetch("http://localhost:3001/users/register", {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(logUpDetails),
-        })
-            .then((res) => res.json())
-            .then((data) => localStorage.setItem('accessToken', data.accessToken))
-        navigate('/')
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
         logUpDetails = {
-            username: data.get('userName'),
-            password: data.get('password'),
-            email: data.get('email'),
+            username: getValues("username"),
+            password: getValues("password"),
+            email: getValues('email')
         }
-        logUp(logUpDetails)
-        // ? logUp(logUpDetails) : console.log("try again");
-
-
-
+        axios
+            .post("http://localhost:3001/users/register", logUpDetails)
+            .then((res) => {
+                localStorage.setItem('accessToken', res.data.accessToken)
+                navigate('/')
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+        reset();
+        setIsSignUp(false);
     };
 
     return (
-
         <ThemeProvider theme={theme}>
             <Header />
             <SideBar />
@@ -99,10 +98,13 @@ export default function SignUp() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate
+                        onSubmit={handleSubmit(onSubmit)}
+                        sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    onFocus={() => setIsSignUp(true)}
                                     autoComplete="given-name"
                                     name="fullName"
                                     required
@@ -110,6 +112,12 @@ export default function SignUp() {
                                     id="fullName"
                                     label="Full Name"
                                     autoFocus
+                                    onError={(e) => { console.log(e); }}
+                                    {...register("fullname", {
+                                        required: true,
+                                        minLength: 2,
+                                        maxLength: 10,
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -121,7 +129,18 @@ export default function SignUp() {
                                     // value={setUsernameValue(usernameValue)}
                                     name="userName"
                                     autoComplete=" user-name"
+                                    {...register("username", {
+                                        required: true,
+                                        minLength: 2,
+                                        maxLength: 10,
+                                    })}
                                 />
+                                {errors.username && (
+                                    <div className="error-invalid-value">
+                                        {" "}
+                                        This field is required or the username is invalid
+                                    </div>
+                                )}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -131,6 +150,11 @@ export default function SignUp() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    {...register("email", {
+                                        required: true,
+                                        minLength: 2,
+                                        maxLength: 20,
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -143,7 +167,22 @@ export default function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 4,
+                                        maxLength: 10,
+                                    })}
                                 />
+                                {errors.password && (
+                                    <div className="error-invalid-value">
+                                        This field is required or the password is invalid
+                                    </div>
+                                )}
+                                {!isSignUp && (
+                                    <div className='error-invalid-value'>
+                                        Faild to sign up
+                                    </div>
+                                )}
                             </Grid>
                             <Grid item xs={12}>
                                 {/* <FormControlLabel
@@ -158,7 +197,6 @@ export default function SignUp() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-
                         >
                             Sign Up
                         </Button>

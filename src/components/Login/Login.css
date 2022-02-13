@@ -1,4 +1,8 @@
 .login_box{
     text-align: center;
-
 }
+
+.error-invalid-value {
+    color: red;
+    font-size: small;
+  }

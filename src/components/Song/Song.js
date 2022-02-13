@@ -1,7 +1,8 @@
 import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material';
 import './Song.css'
 import DeleteIcon from '@mui/icons-material/Delete';
-const Song = ({ id, title, imgUrl, artist, url, removeSong, playSong, index }) => {
+const Song = ({ song, removeSong, playSong, index, value }) => {
+    const { title, url, imgUrl } = { ...song }
     return (
         <ListItem
             secondaryAction={

@@ -1,5 +1,7 @@
 import './Login.css'
-import { Button, Checkbox, createTheme, FormControlLabel, TextField } from '@mui/material'
+import { Button, createTheme, TextField } from '@mui/material';
+import axios from 'axios';
+import { useForm } from "react-hook-form";
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useNavigate, Link as LinkUp } from 'react-router-dom';
@@ -41,45 +43,49 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        reset,
+        formState: { errors },
+    } = useForm();
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loged, setLoged] = useState(true);
     let LoginDetails = {};
 
-    const handleSubmit = (event) => {
-
-        const callServer = (loginDetails) => {
-            localStorage.removeItem("accessToken");
-            fetch('http://localhost:3001/users/login', {
-                method: 'POST',
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(loginDetails),
+    const onSubmit = () => {
+        setLoged(true);
+        LoginDetails = {
+            username: getValues("username"),
+            password: getValues("password"),
+        };
+        console.log({ LoginDetails });
+        localStorage.removeItem("accessToken");
+        axios
+            .post('http://localhost:3001/users/login', LoginDetails)
+            .then((res) => {
+                console.log(res.data);
+                if (res.data) {
+                    localStorage.setItem('accessToken', res.data);
+                    navigate("/");
+                }
+                // if (res.message === 'dont exist' || res.message === 'invalid credential') {
+                //     setPassword("");
+                // } else {
+                //     localStorage.setItem('accessToken', res.data);
+                //     navigate("/");
+                // }
             })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data.message);
-                    if (data.message === 'dont exist' || data.message === 'invalid credential') {
-                        setPassword("");
-
-                    } else {
-                        localStorage.setItem('accessToken', data)
-                        navigate("/")
-                    }
-                })
-        }
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        LoginDetails = { username: data.get('username'), password: data.get('password') }
-        console.log({
-            LoginDetails
-        });
-        callServer(LoginDetails);
+            .catch((e) => {
+                console.log(e);
+            });
+        reset(setPassword(""));
         LoginDetails = {};
-    };
-
+        setLoged(false);
+    }
     return (
         <ThemeProvider theme={theme}>
             <Header />
@@ -100,7 +106,9 @@ export default function LogIn() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form"
+                        onSubmit={handleSubmit(onSubmit)}
+                        sx={{ mt: 1 }}>
                         <TextField
                             value={username}
                             onInput={(e) => {
@@ -115,7 +123,18 @@ export default function LogIn() {
                             autoComplete="username"
                             autoFocus
                             onError={(e) => { console.log(e); }}
+                            {...register("username", {
+                                required: true,
+                                minLength: 2,
+                                maxLength: 10,
+                            })}
                         />
+                        {errors.username && (
+                            <div className="error-invalid-value">
+                                {" "}
+                                This field is required or the username is invalid
+                            </div>
+                        )}
                         <TextField
                             value={password}
                             onInput={(e) => {
@@ -129,13 +148,27 @@ export default function LogIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-
+                            {...register("password", {
+                                required: true,
+                                minLength: 4,
+                                maxLength: 10,
+                            })}
                         />
-                        <FormControlLabel
+                        {errors.password && (
+                            <div className="error-invalid-value">
+                                This field is required or the password is invalid
+                            </div>
+                        )}
+                        {!loged && (
+                            <div className='error-invalid-value'>
+                                User information is invalid
+                            </div>
+                        )}
+                        {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                             onChange={(e) => console.log(e.target.checked)}
-                        />
+                        /> */}
                         <Button
                             type="submit"
                             fullWidth

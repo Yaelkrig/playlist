@@ -23,13 +23,14 @@
     margin-left: 10%;
 }
 
-
-h3{
-    display: inline;
-    font-size: xx-large;
+.css-1pkm9xp-MuiButtonBase-root-MuiTab-root{
+    font-family: 'Courgette', cursive;
 }
 .SongList .songs_container{
     margin-top: 0%;
+}
+.SongList .playlists_container{
+    display: flex;
 }
 .SongList #display{
 background:  url("../../../images/down-arrow.png") center center/cover no-repeat;

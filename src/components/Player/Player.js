@@ -1,9 +1,9 @@
 import '../Player/Player.css'
 import Plyr from "plyr-react";
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 
-const Player = ({ urls, url }) => {
+const Player = ({ url }) => {
     // const [ended, setEnded] = useState(false)
     const videoSrc = {
         type: "video",
@@ -22,6 +22,7 @@ const Player = ({ urls, url }) => {
     return (
         <div className='Player'  >
             <Plyr
+
                 ref={plyrRef}
                 source={videoSrc}
                 options={{
