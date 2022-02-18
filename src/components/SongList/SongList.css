@@ -27,6 +27,9 @@
     width: 60rem;
     margin-top: 10%;
     height: 35rem;
+  
+}
+.SongList .songs_container{
     overflow: auto;
 }
 

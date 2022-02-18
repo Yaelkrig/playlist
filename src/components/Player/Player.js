@@ -1,9 +1,10 @@
 import '../Player/Player.css'
 import Plyr from "plyr-react";
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 
 const Player = ({ url }) => {
+
     // const [ended, setEnded] = useState(false)
     const videoSrc = {
         type: "video",
@@ -15,10 +16,17 @@ const Player = ({ url }) => {
 
         ],
     };
-    const plyrRef = useRef(null);
+    const plyrRef = useRef();
 
-    //useEffect(() => console.log(plyrRef.current.plyr))
-    // plyrRef.current.plyr.on('ended', () => { console.log('end'); })
+    useEffect(() => {
+        console.log("##############", plyrRef.current.plyr)
+        // plyrRef.current.plyr.fullscreen.enter()
+
+        // plyrRef.current.plyr.on("ended", () => {
+        //     console.log('endd');
+        // })
+    }
+    )
     return (
         <div className='Player'  >
             <Plyr
@@ -26,8 +34,9 @@ const Player = ({ url }) => {
                 source={videoSrc}
                 options={{
                     ratio: '5:3',
+                    autoplay: true,
+
                 }}
-                autoPlay={true}
             />
         </div >
     )

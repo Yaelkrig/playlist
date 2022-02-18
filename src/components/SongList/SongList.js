@@ -54,8 +54,8 @@ const SongList = ({ playSong, lists }) => {
                         "Authorization": `bearer ${userToken}`
                     },
                 })
-                .then(data => {
-                    console.log(data.data);
+                .then(res => {
+                    setPlaylists(res.data)
                 });
         } catch (e) {
             console.log(e);
@@ -132,17 +132,18 @@ const SongList = ({ playSong, lists }) => {
                                 )
                             })}
                         </Tabs>}
-
-                    {lists.map((list, index) => {
-                        return (<TabPanel key={list._id} value={value} index={index}>
-                            <div className="list" id={index} >
-                                {list.songs.map((song, index) => {
-                                    return <Song key={song.id} playlistId={list._id} value={value} song={song} index={index} removeSong={removeSong} playSong={playSong} />
-                                })}
-                            </div>
-                        </TabPanel>
-                        )
-                    })}
+                    <Box className="songs_container">
+                        {lists.map((list, index) => {
+                            return (<TabPanel key={list._id} value={value} index={index}>
+                                <div className="list" id={index} >
+                                    {list.songs.map((song, index) => {
+                                        return <Song key={song.id} playlistId={list._id} value={value} song={song} index={index} removeSong={removeSong} playSong={playSong} />
+                                    })}
+                                </div>
+                            </TabPanel>
+                            )
+                        })}
+                    </Box>
                 </Box>
             </div>
         </Grid>
