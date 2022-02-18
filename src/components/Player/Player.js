@@ -22,12 +22,12 @@ const Player = ({ url }) => {
     return (
         <div className='Player'  >
             <Plyr
-
                 ref={plyrRef}
                 source={videoSrc}
                 options={{
                     ratio: '5:3',
                 }}
+                autoPlay={true}
             />
         </div >
     )

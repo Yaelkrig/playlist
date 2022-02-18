@@ -6,8 +6,8 @@
 .ItemForm .search{
     background:  url('../../../images/loupe.png') center center/cover no-repeat;
     background-size:cover;
-    height: 3vh; 
-    width: 3vh;
+    height: 1.5rem; 
+    width: 1.5rem;
     border: none;
     position: relative;
     transform: rotate(270deg);
@@ -31,7 +31,7 @@
     position: relative;
     
 }
-button:hover{
+.ItemForm button:hover{
     cursor: pointer;
     opacity: 0.5;
     

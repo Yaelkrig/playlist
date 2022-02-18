@@ -3,8 +3,9 @@ import './About.css'
 const About = () => {
 
     return (
-        <div
-            className='About'>hiiii</div>
+        <div className='About'>
+            <span className='created_by'>Yael Krigman</span>
+        </div>
     )
 
 }

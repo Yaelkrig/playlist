@@ -8,8 +8,10 @@ import removeContext from "../../Contexts/removeContext";
 import { Box } from "@mui/system";
 import PropTypes from 'prop-types';
 import playlistIndexContext from "../../Contexts/playlistIndexContext";
+import axios from "axios";
 
 const SongList = ({ playSong, lists }) => {
+    const userToken = localStorage.accessToken;
     const { setPlaylists } = useContext(removeContext)
     const { setPlaylistIndex } = useContext(playlistIndexContext)
     const [playlistName, setPlaylistName] = useState("")
@@ -18,19 +20,17 @@ const SongList = ({ playSong, lists }) => {
     console.log('^^^^^^', value);
     const addPlaylist = () => {
         try {
-            fetch('http://localhost:3001/playlists/newPlaylist',
+            const add = {
+                title: playlistName,
+                songs: []
+            }
+            axios.post('http://localhost:3001/playlists/newPlaylist', add,
                 {
-                    method: 'POST',
                     headers: {
                         "Content-type": "application/json",
-                        "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                        "Authorization": `bearer ${userToken}`
                     },
-                    body: JSON.stringify({
-                        title: playlistName,
-                        songs: []
-                    }),
                 })
-                .then(res => res.json())
                 .then(data => {
                     console.log(data);
                     setPlaylists(prePlaylists => [...prePlaylists, data.message]);
@@ -40,26 +40,23 @@ const SongList = ({ playSong, lists }) => {
             console.log(e);
         }
     }
-    const removeSong = () => {
-        setPlaylists(prePlaylists => prePlaylists.map(list => { return console.log(list); }))
+    const removeSong = (playlist, song) => {
+        // setPlaylists(prePlaylists => prePlaylists.map(list => { return console.log(list); }))
+        const data = JSON.stringify({
+            playlistId: playlist,
+            songId: song
+        });
         try {
-            fetch('http://localhost:3001/playlists/deleteSong',
+            axios.put('http://localhost:3001/playlists/deleteSong', data,
                 {
-                    method: 'DELETE',
                     headers: {
                         "Content-type": "application/json",
-                        "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                        "Authorization": `bearer ${userToken}`
                     },
-                    body: JSON.stringify({
-                        playlistId: "",
-                        songId: ""
-                    }),
                 })
-                .then(res => res.json())
                 .then(data => {
-                    console.log(data);
-                }
-                );
+                    console.log(data.data);
+                });
         } catch (e) {
             console.log(e);
         }
@@ -72,7 +69,7 @@ const SongList = ({ playSong, lists }) => {
     }
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        setPlaylistIndex(value);
+        setPlaylistIndex(newValue);
     };
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -105,7 +102,6 @@ const SongList = ({ playSong, lists }) => {
                         ref={newPlaylistRef}
                         id="playlist_input"
                         label="Create New Playlist"
-                        // value={setUsernameValue(usernameValue)}
                         name="newPlaylist"
                         onChange={(e) => { setPlaylistName(e.target.value) }}
                         value={playlistName}
@@ -132,25 +128,21 @@ const SongList = ({ playSong, lists }) => {
                         >
                             {lists.map((playlist, i) => {
                                 return (
-                                    <Tab key={i} label={playlist.title} {...a11yProps(i)} ></Tab>
+                                    <Tab key={playlist.title} label={playlist.title} {...a11yProps(i)} ></Tab>
                                 )
                             })}
                         </Tabs>}
 
                     {lists.map((list, index) => {
-                        return (<TabPanel value={value} index={index}>
-                            <div className="list" id={index} key={list._id}>
-                                <div className="songs_container">
-                                    {list.songs.map((song, index) => {
-                                        return <Song key={song.id} value={value} song={song} index={index} removeSong={removeSong} playSong={playSong} />
-                                    })}
-                                </div>
+                        return (<TabPanel key={list._id} value={value} index={index}>
+                            <div className="list" id={index} >
+                                {list.songs.map((song, index) => {
+                                    return <Song key={song.id} playlistId={list._id} value={value} song={song} index={index} removeSong={removeSong} playSong={playSong} />
+                                })}
                             </div>
                         </TabPanel>
                         )
                     })}
-
-
                 </Box>
             </div>
         </Grid>

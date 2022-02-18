@@ -39,7 +39,6 @@ const SideBar = ({ handleLogOut }) => {
                     <Tooltip title="Logout" placement="right-start">
                         <LinkUp to={'/'} color="inherit" >
                             <LogoutIcon onClick={() => {
-                                console.log("out");
                                 handleLogOut();
                             }} />
                         </LinkUp>

@@ -7,6 +7,7 @@ import { useContext } from 'react';
 
 const Result = ({ details, playSong, addSong }) => {
     const { playlistIndex } = useContext(playlistIndexContext)
+    console.log(playlistIndex);
     const title = details.snippet.title
     const songUrl = details.id.videoId
     const imgUrl = details.snippet.thumbnails.default.url
@@ -17,7 +18,6 @@ const Result = ({ details, playSong, addSong }) => {
                 <IconButton edge="end" aria-label="delete">
                     <AddIcon
                         onClick={() => {
-                            console.log('@', details);
                             songToAdd = {
                                 id: details.id.videoId,
                                 title: details.snippet.title,
@@ -32,7 +32,6 @@ const Result = ({ details, playSong, addSong }) => {
         >
             <span className='play_song'
                 onClick={() => {
-                    console.log(songUrl);
                     playSong(songUrl)
                 }}
             >
@@ -48,20 +47,6 @@ const Result = ({ details, playSong, addSong }) => {
         </ListItem >
 
     )
-
-
-
-
-    // <div className='Result'>
-    //     <img alt={title} src={imgUrl} className='result_img' />
-    //     <span className='title'>
-    //         {title}
-    //     </span>
-    //     <button className='play_button'
-    //         onClick={() => { playSong(songUrl) }}></button>
-    //     <button className='addToPlaylist'
-    //         onClick={() => { addSong(details) }}></button>
-    // </div >
 }
 
 export default Result;

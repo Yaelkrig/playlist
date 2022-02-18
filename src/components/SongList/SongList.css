@@ -12,6 +12,7 @@
 }
 .SongList .add_playlist{
     margin-top: 0;
+    
 }
 .add_playlist:hover{
     cursor: pointer;
@@ -19,8 +20,14 @@
     border-radius: 1rem;
 }
 .SongList .add_container{
+    margin-top: 15%;
+    margin-left: 15%;
+}
+.SongList .playlists_container{
+    width: 60rem;
     margin-top: 10%;
-    margin-left: 10%;
+    height: 35rem;
+    overflow: auto;
 }
 
 .css-1pkm9xp-MuiButtonBase-root-MuiTab-root{

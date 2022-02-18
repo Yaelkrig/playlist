@@ -62,12 +62,10 @@ export default function LogIn() {
             username: getValues("username"),
             password: getValues("password"),
         };
-        console.log({ LoginDetails });
         localStorage.removeItem("accessToken");
         axios
             .post('http://localhost:3001/users/login', LoginDetails)
             .then((res) => {
-                console.log(res.data);
                 if (res.data) {
                     localStorage.setItem('accessToken', res.data);
                     navigate("/");

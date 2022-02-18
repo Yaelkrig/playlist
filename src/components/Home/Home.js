@@ -13,6 +13,8 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import removeContext from '../../Contexts/removeContext';
 import playlistIndexContest from '../../Contexts/playlistIndexContext';
+import axios from 'axios';
+import currentUserContext from '../../Contexts/currentUserContext';
 // import ResultContext from './Contexts/ResultContext';
 const theme = createTheme({
     palette: {
@@ -37,8 +39,6 @@ const Home = () => {
     // const [rememberUser, setRememberUser] = useState(false);
 
     const userLoged = () => {
-        // to check if this is the better sollution
-
         if (userToken) {
             setCurrentUser(JSON.parse(atob(userToken.split(".")[1])).username)
         }
@@ -46,18 +46,15 @@ const Home = () => {
     useEffect(() => {
         if (!playlists[0]) {
             try {
-                fetch('http://localhost:3001/playlists/uesr', {
-                    method: 'GET',
+                axios.get('http://localhost:3001/playlists/uesr', {
                     headers: {
                         "Content-type": "application/json",
                         "Authorization": `bearer ${userToken}`
                     },
                 })
-                    .then(res => res.json())
                     .then(songs => {
-                        if (songs.message[0] === undefined) return;
-                        console.log(songs.message);
-                        songs.message.map(playlist => {
+                        if (songs.data.message[0] === undefined) return;
+                        songs.data.message.map(playlist => {
                             return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
                         })
                         setSongPlayer(songs.message[0].songs[0].url)
@@ -65,7 +62,6 @@ const Home = () => {
                 // if (!rememberUser) {
                 //     return handleLogOut();
                 // }
-
             } catch (e) {
                 console.log(e);
             }
@@ -79,38 +75,25 @@ const Home = () => {
         userLoged()
     }, [userToken])
 
-
     const addSong = (details, index) => {
-        console.log(index);
-        console.log('index', playlists[index - 1]);
-
-        console.log({
+        const data = JSON.stringify({
             ...details,
-            playlist: playlists[index - 1]._id
-        });
+            playlist: playlists[index]._id
+        })
         try {
-            fetch('http://localhost:3001/songs/add',
+            axios.post('http://localhost:3001/songs/add', data,
                 {
-                    method: 'POST',
                     headers: {
                         "Content-type": "application/json",
-                        "Authorization": `bearer eyJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2MWZmZjZmMTRhMTcwODE2N2YxNjg2OTMiLCJ1c2VybmFtZSI6InlhZWwiLCJlbWFpbCI6InlhZWxrcmlnQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsInVwZGF0ZWRBdCI6IjIwMjItMDItMDZUMTY6Mjc6MjkuNjYxWiIsIl9fdiI6MH0.v2pMaAap9V96GAkVkSqNWkolMS4E5XXKI0Cxno0gjmg`
+                        "Authorization": `bearer ${userToken}`
                     },
-                    body: JSON.stringify({
-                        ...details,
-                        playlist: playlists[index]._id
-                    }),
                 })
-                .then(res => res.json())
                 .then(data => {
-                    playlists.map(playlist => {
-                        return playlist.id === "6200f13f47b5e6904b48ed0b" ? playlist.songs.push(data) : console.log('error');
-                    })
-                    console.log("data", data);
+                    // playlists.map(playlist => {
+                    //     return playlist.id === "6200f13f47b5e6904b48ed0b" ? playlist.songs.push(data.data) : console.log('error');
+                    // })
                     setSongs([...songs, data])
-                }
-                );
-
+                });
             setNewSong("")
         } catch (e) {
             console.log(e);
@@ -131,7 +114,6 @@ const Home = () => {
     }
 
     const handleLogOut = () => {
-        console.log('from home');
         localStorage.removeItem("accessToken");
         setCurrentUser('Guest')
     }
@@ -139,8 +121,9 @@ const Home = () => {
     return (
         <ThemeProvider theme={theme}>
             <div className="Home">
-                <Header />
-                <span className='name'>Hello {currentUser},</span>
+                <currentUserContext.Provider value={{ currentUser }}>
+                    <Header />
+                </currentUserContext.Provider>
                 <SideBar handleLogOut={handleLogOut} />
                 <Player url={songPlayer} />
                 <ItemForm addSong={addSong} newSong={newSong} inputRef={inputRef} searchSong={searchSong} />
