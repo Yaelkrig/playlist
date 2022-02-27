@@ -7,15 +7,18 @@ import { useContext } from 'react';
 
 const Result = ({ details, playSong, addSong }) => {
     const { playlistIndex } = useContext(playlistIndexContext)
-    console.log(playlistIndex);
     const title = details.snippet.title
     const songUrl = details.id.videoId
     const imgUrl = details.snippet.thumbnails.default.url
-    let songToAdd = {}
+    let songToAdd = {};
+    let disButton;
+    playlistIndex === -1 ? disButton = true : disButton = false;
     return (
-        <ListItem
+        <ListItem className='Result'
             secondaryAction={
-                <IconButton edge="end" aria-label="delete">
+                <IconButton edge="end" aria-label="delete"
+                    disabled={disButton}
+                >
                     <AddIcon
                         onClick={() => {
                             songToAdd = {
@@ -25,8 +28,9 @@ const Result = ({ details, playSong, addSong }) => {
                                 url: details.id.videoId,
                                 imgUrl: details.snippet.thumbnails.default.url,
                             }
-                            addSong(songToAdd, playlistIndex)
-                        }} />
+                            addSong(songToAdd, playlistIndex);
+                        }}
+                    />
                 </IconButton>
             }
         >
@@ -36,16 +40,13 @@ const Result = ({ details, playSong, addSong }) => {
                 }}
             >
                 <ListItemAvatar >
-                    <Avatar
-                        sx={{ width: 65, height: 65 }}
-                    >
+                    <Avatar sx={{ width: 65, height: 65 }}>
                         <img className='song_img' alt={title} src={imgUrl} />
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText className="description" />{title}
             </span>
         </ListItem >
-
     )
 }
 

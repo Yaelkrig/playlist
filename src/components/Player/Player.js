@@ -1,7 +1,7 @@
 import '../Player/Player.css'
 import Plyr from "plyr-react";
+import "plyr-react/dist/plyr.css";
 import { useEffect, useRef } from 'react';
-
 
 const Player = ({ url }) => {
 
@@ -19,7 +19,7 @@ const Player = ({ url }) => {
     const plyrRef = useRef();
 
     useEffect(() => {
-        console.log("##############", plyrRef.current.plyr)
+        // console.log("##############", plyrRef.current.plyr)
         // plyrRef.current.plyr.fullscreen.enter()
 
         // plyrRef.current.plyr.on("ended", () => {

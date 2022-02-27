@@ -70,18 +70,15 @@ export default function LogIn() {
                     localStorage.setItem('accessToken', res.data);
                     navigate("/");
                 }
-                // if (res.message === 'dont exist' || res.message === 'invalid credential') {
-                //     setPassword("");
-                // } else {
-                //     localStorage.setItem('accessToken', res.data);
-                //     navigate("/");
-                // }
             })
             .catch((e) => {
                 console.log(e);
             });
-        reset(setPassword(""));
-        LoginDetails = {};
+        reset({
+            password: "",
+            LoginDetails: {},
+        });
+        setPassword("");
         setLoged(false);
     }
     return (

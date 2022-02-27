@@ -8,11 +8,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Tooltip } from "@mui/material";
 import { useState } from "react/cjs/react.development";
 
-const SideBar = ({ handleLogOut }) => {
-    const [isOpen, setIsOpen] = useState(false)
+const SideBar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken");
+    }
 
     return (
         <div className="Side"
+            onClick={() => { setIsOpen(prevValue => !prevValue) }}
             onMouseLeave={() => {
                 setIsOpen(false)
             }} >
@@ -37,7 +42,7 @@ const SideBar = ({ handleLogOut }) => {
                         </LinkUp>
                     </Tooltip>
                     <Tooltip title="Logout" placement="right-start">
-                        <LinkUp to={'/'} color="inherit" >
+                        <LinkUp to={'/Login'} color="inherit" >
                             <LogoutIcon onClick={() => {
                                 handleLogOut();
                             }} />

@@ -10,7 +10,6 @@ body{
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-  background-color: #e6dfdf;
 }
 .App-logo {
   height: 40vmin;
@@ -39,12 +38,12 @@ body{
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+/* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
