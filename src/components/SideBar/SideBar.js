@@ -6,7 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Tooltip } from "@mui/material";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = useState(false);
