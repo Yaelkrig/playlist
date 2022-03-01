@@ -14,7 +14,7 @@ const Header = () => {
     }, [userToken])
     return (
         <div className='Header'>
-            <div className='logo'></div>
+            {/* <div className='logo'></div> */}
             <h1>
                 Playlist
             </h1>
