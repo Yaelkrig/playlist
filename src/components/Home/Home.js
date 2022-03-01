@@ -4,13 +4,13 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import playlistIndexContest from '../../Contexts/playlistIndexContext';
 import removeContext from '../../Contexts/removeContext';
-import axios from 'axios';
 import Header from '../Header/Header';
 import Player from '../Player/Player';
 import SongList from '../SongList/SongList';
 import SideBar from '../SideBar/SideBar';
 import About from '../About/About';
 import Search from '../Search/Search';
+import api from '../../apis/axios_api';
 
 // import ResultContext from './Contexts/ResultContext';
 const theme = createTheme({
@@ -25,7 +25,6 @@ const theme = createTheme({
 });
 const Home = () => {
     const [songPlayer, setSongPlayer] = useState("");
-    const userToken = localStorage.accessToken;
     const [playlists, setPlaylists] = useState([]);
     const [playlistIndex, setPlaylistIndex] = useState(0);
     // const [rememberUser, setRememberUser] = useState(false);
@@ -33,12 +32,7 @@ const Home = () => {
     useEffect(() => {
         if (!playlists[0]) {
             try {
-                axios.get('http://localhost:3001/playlists/uesr', {
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": `bearer ${userToken}`
-                    },
-                })
+                api.get('/playlists/uesr')
                     .then(songs => {
                         if (songs.data.message[0] === undefined) return setPlaylistIndex(-1);
                         songs.data.message.map(playlist => {

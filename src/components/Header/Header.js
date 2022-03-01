@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Header.css'
 
-const Header = ({ }) => {
+const Header = () => {
     const userToken = localStorage.accessToken;
     const [currentUser, setCurrentUser] = useState("Guest");
     const userLoged = () => {

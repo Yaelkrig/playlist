@@ -19,8 +19,8 @@ import Header from "../Header/Header";
 import About from "../About/About";
 import SideBar from "../SideBar/SideBar";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import axios from "axios";
 import { useState } from "react";
+import api from "../../apis/axios_api";
 
 const theme = createTheme({
     palette: {
@@ -65,8 +65,8 @@ export default function SignUp() {
             password: getValues("password"),
             email: getValues('email')
         }
-        axios
-            .post("http://localhost:3001/users/register", logUpDetails)
+        api
+            .post("/users/register", logUpDetails)
             .then((res) => {
                 localStorage.setItem('accessToken', res.data.accessToken)
                 navigate('/')

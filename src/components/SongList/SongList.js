@@ -8,10 +8,9 @@ import removeContext from "../../Contexts/removeContext";
 import { Box } from "@mui/system";
 import PropTypes from 'prop-types';
 import playlistIndexContext from "../../Contexts/playlistIndexContext";
-import axios from "axios";
+import api from "../../apis/axios_api";
 
 const SongList = ({ playSong, lists }) => {
-    const userToken = localStorage.accessToken;
     const { setPlaylists } = useContext(removeContext)
     const { setPlaylistIndex } = useContext(playlistIndexContext)
     const [playlistName, setPlaylistName] = useState("")
@@ -23,13 +22,7 @@ const SongList = ({ playSong, lists }) => {
                 title: playlistName,
                 songs: []
             }
-            axios.post('http://localhost:3001/playlists/newPlaylist', add,
-                {
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": `bearer ${userToken}`
-                    },
-                })
+            api.post('/playlists/newPlaylist', add)
                 .then(data => {
                     setPlaylists(data.data.message);
 
@@ -46,13 +39,7 @@ const SongList = ({ playSong, lists }) => {
             songId: song
         });
         try {
-            axios.put('http://localhost:3001/playlists/deleteSong', data,
-                {
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": `bearer ${userToken}`
-                    },
-                })
+            api.put('/playlists/deleteSong', data)
                 .then(res => {
                     setPlaylists(res.data);
                     setPlaylistIndex(lists.length - 1);

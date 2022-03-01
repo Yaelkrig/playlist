@@ -1,6 +1,5 @@
 import './Login.css'
 import { Button, createTheme, TextField } from '@mui/material';
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/system';
 import { useState } from 'react';
@@ -17,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@emotion/react';
 import SideBar from '../SideBar/SideBar';
+import api from '../../apis/axios_api';
 
 const theme = createTheme({
     palette: {
@@ -63,8 +63,8 @@ export default function LogIn() {
             password: getValues("password"),
         };
         localStorage.removeItem("accessToken");
-        axios
-            .post('http://localhost:3001/users/login', LoginDetails)
+        api
+            .post('/users/login', LoginDetails)
             .then((res) => {
                 if (res.data) {
                     localStorage.setItem('accessToken', res.data);
