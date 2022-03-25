@@ -4,15 +4,39 @@ import './Result.css'
 import AddIcon from '@mui/icons-material/Add';
 import playlistIndexContext from '../../Contexts/playlistIndexContext';
 import { useContext } from 'react';
+import songIndexContext from '../../Contexts/songIndexContext';
+import PlaylistsContext from '../../Contexts/PlaylistsContext';
+import api from '../../apis/axios_api';
 
-const Result = ({ details, playSong, addSong }) => {
-    const { playlistIndex } = useContext(playlistIndexContext)
+const Result = ({ details }) => {
+    const { setSongPlayer } = useContext(songIndexContext);
+    const { playlistIndex } = useContext(playlistIndexContext);
+    const { playlists, setPlaylists } = useContext(PlaylistsContext)
+    console.log(playlistIndex);
     const title = details.snippet.title
     const songUrl = details.id.videoId
     const imgUrl = details.snippet.thumbnails.default.url
     let songToAdd = {};
     let disButton;
     playlistIndex === -1 ? disButton = true : disButton = false;
+    const addSong = (details, index) => {
+        if (playlists[index]) {
+            const data = JSON.stringify({
+                ...details,
+                playlist: playlists[index]._id
+            })
+            try {
+                api.post('/songs/add', data)
+                    .then(res => {
+                        setPlaylists(res.data)
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            return true;
+        }
+    }
     return (
         <ListItem className='Result'
             secondaryAction={
@@ -36,7 +60,7 @@ const Result = ({ details, playSong, addSong }) => {
         >
             <span className='play_song'
                 onClick={() => {
-                    playSong(songUrl)
+                    setSongPlayer(songUrl)
                 }}
             >
                 <ListItemAvatar >

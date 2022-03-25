@@ -15,6 +15,14 @@
     margin-top: 0;
     width: 100%;
 }
+.add-playlist-no-p{
+    font-weight: 400 !important;
+    font-size: medium !important;
+}
+.add-playlist-no-p:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
 
 .add_playlist:hover{
     cursor: pointer;

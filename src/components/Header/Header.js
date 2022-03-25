@@ -12,6 +12,7 @@ const Header = () => {
     useEffect(() => {
         userLoged();
     }, [userToken])
+    console.log('header');
     return (
         <div className='Header'>
             {/* <div className='logo'></div> */}

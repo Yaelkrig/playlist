@@ -10,11 +10,9 @@ import { useState } from "react";
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const handleLogOut = () => {
         localStorage.removeItem("accessToken");
     }
-
     return (
         <div className="Side"
             onClick={() => { setIsOpen(prevValue => !prevValue) }}

@@ -1,16 +1,18 @@
 import '../Player/Player.css'
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import songIndexContext from '../../Contexts/songIndexContext';
 
-const Player = ({ url }) => {
-
+const Player = () => {
+    const { songPlayer } = useContext(songIndexContext)
+    console.log('player render');
     // const [ended, setEnded] = useState(false)
     const videoSrc = {
         type: "video",
         sources: [
             {
-                src: url,
+                src: songPlayer,
                 provider: "youtube"
             }
 

@@ -83,8 +83,6 @@ export default function LogIn() {
     }
     return (
         <ThemeProvider theme={theme}>
-            <Header />
-            <SideBar />
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box className="login_box"
@@ -189,7 +187,6 @@ export default function LogIn() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
-            <About />
         </ThemeProvider>
     );
 }

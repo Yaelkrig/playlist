@@ -1,65 +1,23 @@
-import { Grid, IconButton, Input, Tab, Tabs, Tooltip, Typography } from "@mui/material";
-import { useState } from "react";
-import Song from "../Song/Song";
 import './SongList.css'
-import AddIcon from '@mui/icons-material/Add';
-import { useRef, useContext } from "react";
-import removeContext from "../../Contexts/removeContext";
+import { Grid, Tab, Tabs, Typography } from "@mui/material";
+import Song from "../Song/Song";
+import { useRef, useContext, useState } from "react";
+import playlistIndexContext from "../../Contexts/playlistIndexContext";
 import { Box } from "@mui/system";
 import PropTypes from 'prop-types';
-import playlistIndexContext from "../../Contexts/playlistIndexContext";
-import api from "../../apis/axios_api";
+import AddPlaylist from "../AddPlaylist/AddPlaylist";
+import PlaylistsContext from '../../Contexts/PlaylistsContext';
 
-const SongList = ({ playSong, lists }) => {
-    const { setPlaylists } = useContext(removeContext)
-    const { setPlaylistIndex } = useContext(playlistIndexContext)
-    const [playlistName, setPlaylistName] = useState("")
+const SongList = () => {
+    const { playlists } = useContext(PlaylistsContext)
+    const { setPlaylistIndex } = useContext(playlistIndexContext);
+    const [playlistName, setPlaylistName] = useState("");
     const [value, setValue] = useState(0);
+    const [isAddPlaylist, setIsAddPlaylist] = useState(false);
     const newPlaylistRef = useRef(null);
-    const addPlaylist = () => {
-        try {
-            const add = {
-                title: playlistName,
-                songs: []
-            }
-            api.post('/playlists/newPlaylist', add)
-                .then(data => {
-                    setPlaylists(data.data.message);
-
-                }
-                );
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    const removeSong = (playlist, song) => {
-        // setPlaylists(prePlaylists => prePlaylists.map(list => { return console.log(list); }))
-        const data = JSON.stringify({
-            playlistId: playlist,
-            songId: song
-        });
-        try {
-            api.put('/playlists/deleteSong', data)
-                .then(res => {
-                    setPlaylists(res.data);
-                    setPlaylistIndex(lists.length - 1);
-                });
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    const a11yProps = (index) => {
-        return {
-            id: `vertical-tab-${index}`,
-            'aria-controls': `vertical-tabpanel-${index}`,
-        };
-    }
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        setPlaylistIndex(newValue);
-    };
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
+
         return (
             <div
                 role="tabpanel"
@@ -76,17 +34,28 @@ const SongList = ({ playSong, lists }) => {
             </div>
         );
     }
+
     TabPanel.propTypes = {
         children: PropTypes.node,
         index: PropTypes.number.isRequired,
         value: PropTypes.number.isRequired,
     };
+    const a11yProps = (index) => {
+        return {
+            id: `vertical-tab-${index}`,
+            'aria-controls': `vertical-tabpanel-${index}`,
+        };
+    }
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+        setPlaylistIndex(newValue);
+    }
     return (
         <Grid item xs={10} md={16}>
             <div className="SongList" >
-
                 <Box className="playlists_container">
-                    {lists[0] ?
+                    {playlists[0] && !isAddPlaylist ?
                         <Tabs className="title"
                             orientation="vertical"
                             variant="scrollable"
@@ -95,25 +64,33 @@ const SongList = ({ playSong, lists }) => {
                             aria-label="Vertical tabs example"
                             sx={{ borderRight: 1, borderColor: 'divider' }}
                         >
-                            {lists[0] && lists.map((playlist, i) => {
+                            {playlists[0] && playlists.map((playlist, i) => {
                                 return (
                                     <Tab key={playlist.title} label={playlist.title} {...a11yProps(i)} ></Tab>
                                 )
                             })}
-                            <Tab label='*add playlist*'></Tab>
+                            <Tab label='*add playlist*'{...a11yProps(playlists.l)}></Tab>
                         </Tabs>
-                        : <div className="message">
-                            ***** There is no playlists to add to. Add playlist or play songs *****
-                        </div>}
+                        : isAddPlaylist ?
+                            <AddPlaylist
+                                newPlaylistRef={newPlaylistRef}
+                                playlistName={playlistName}
+                                setPlaylistName={setPlaylistName}
+                                setIsAddPlaylist={setIsAddPlaylist} />
+                            : <div className="message">
+                                *** ** There is no playlists to add to.
+                                <span className="add-playlist-no-p"
+                                    onClick={() => { setIsAddPlaylist(true) }}> Add playlist </span>
+                                or play songs *****
+                            </div>}
                     <Box className="songs_container">
-                        {lists.map((list, index) => {
+                        {playlists.map((list, index) => {
                             return (<TabPanel key={list._id} value={value} index={index}>
                                 {list.songs[0] ?
                                     <div className="list" id={index} >
                                         {list.songs.map((song, index) => {
                                             return <Song key={song.id} playlistId={list._id}
-                                                value={value} song={song} index={index}
-                                                removeSong={removeSong} playSong={playSong} />
+                                                song={song} />
                                         })}
                                     </div>
                                     : <div className="message">***** There is no songs yet *****</div>
@@ -121,30 +98,12 @@ const SongList = ({ playSong, lists }) => {
                             </TabPanel>
                             )
                         })}
-                        {lists[0] && <TabPanel value={value} index={lists.length}>
-                            <div className="add_container">
-                                <form>
-                                    <Input
-                                        ref={newPlaylistRef}
-                                        id="playlist_input"
-                                        label="Create New Playlist"
-                                        name="newPlaylist"
-                                        placeholder="Add New Playlist"
-                                        onChange={(e) => { setPlaylistName(e.target.value) }}
-                                        value={playlistName}
-                                        color='success'
-                                    ></Input>
-                                    <Tooltip title="create playlist" placement="right-start">
-                                        <IconButton onClick={(e) => {
-                                            e.preventDefault()
-                                            addPlaylist();
-                                            setPlaylistName("");
-                                        }}>
-                                            <AddIcon className="add_playlist" fontSize="large" />
-                                        </IconButton>
-                                    </Tooltip>
-                                </form>
-                            </div>
+                        {playlists[0] && <TabPanel value={value} index={playlists.length}>
+                            <AddPlaylist
+                                newPlaylistRef={newPlaylistRef}
+                                playlistName={playlistName}
+                                setPlaylistName={setPlaylistName}
+                            />
                         </TabPanel>}
                     </Box>
                 </Box>

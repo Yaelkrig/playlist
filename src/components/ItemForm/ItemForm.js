@@ -1,11 +1,20 @@
 import { Input } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import { useState } from 'react'
+import youtube from '../../apis/youtube'
 import './ItemForm.css'
 
-const ItemForm = ({ addSong, searchSong }) => {
+const ItemForm = ({ setResults }) => {
     const [value, setValue] = useState("")
     const inputRef = useRef(null);
+    const searchSong = async (forSearch) => {
+        const res = await youtube.get('/search', {
+            params: {
+                q: forSearch
+            }
+        })
+        setResults(res.data.items)
+    }
     useEffect(() => {
         inputRef.current.focus();
     })
