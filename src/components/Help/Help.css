@@ -1,0 +1,23 @@
+.help_conteiner{
+    font-family: 'Courgette', cursive;
+    margin-left: 10%;
+    align-items: center;
+    border: 1px solid white;
+    padding: 2% 5%;
+    width: 70%;
+    font-size: 1.3rem;
+}
+.help_header{
+    margin-left: -3%;
+}
+.first_p{
+    font-size: 1.5rem;
+}
+.help_axplain {
+    display: flex;
+
+}
+.help_icon{
+margin-top: 0%;
+margin: 0% 0.7% ;
+}

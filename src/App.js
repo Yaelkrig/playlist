@@ -19,6 +19,8 @@ import PlaylistsContext from './Contexts/PlaylistsContext';
 import PlaylistIndexContext from './Contexts/playlistIndexContext';
 import removeContext from './Contexts/removeContext';
 import api from './apis/axios_api';
+import Help from './components/Help/Help';
+import AboutMe from './components/AboutMe/AboutMe';
 
 
 const App = () => {
@@ -66,6 +68,8 @@ const App = () => {
                   <Route exact path="/playlist/:id" element={<PlaylistPlay />} />
                   <Route exact path="/Login" element={<Login />} />
                   <Route exact path="/SignUp" element={<SignUp />} />
+                  <Route exact path="/help" element={<Help />} />
+                  <Route exact path="/about" element={<AboutMe />} />
                 </Routes>
                 <About />
               </Router>

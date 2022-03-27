@@ -7,12 +7,15 @@ import jwt_decode from "jwt-decode";
 const MyPlaylist = () => {
     const navigate = useNavigate();
     const { playlists } = useContext(PlaylistsContext);
-    const userId = jwt_decode(localStorage.accessToken)._id;
+    const userId = localStorage.accessToken ? jwt_decode(localStorage.accessToken)._id : null;
 
-    const MyPlaylists = playlists.filter(playlist => playlist.createdBy === userId);
+    const MyPlaylists = localStorage.accessToken ? playlists.filter(playlist => playlist.createdBy === userId) : null;
     return (
         <>
-            <h2 className='playlists_header'>My Playlists</h2>
+            {
+                userId &&
+                <h2 className='playlists_header'>My Playlists</h2>
+            }
             <div className="playlists_container" >
                 {MyPlaylists &&
                     MyPlaylists.map(playlist => {

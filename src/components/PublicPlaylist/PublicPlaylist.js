@@ -7,8 +7,8 @@ import jwt_decode from "jwt-decode";
 const PublicPlaylist = () => {
     const navigate = useNavigate();
     const { playlists } = useContext(PlaylistsContext);
-    const userId = jwt_decode(localStorage.accessToken)._id;
-    const publicPlaylists = playlists.filter(playlist => playlist.createdBy !== userId);
+    const userId = localStorage.accessToken ? jwt_decode(localStorage.accessToken)._id : null;
+    const publicPlaylists = localStorage.accessToken ? playlists.filter(playlist => playlist.createdBy !== userId) : playlists;
     return (
         <>
             <h2 className='playlists_header'>Public Playlists</h2>

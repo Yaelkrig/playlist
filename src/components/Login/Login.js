@@ -45,6 +45,9 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
+    React.useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const {
         register,
         handleSubmit,

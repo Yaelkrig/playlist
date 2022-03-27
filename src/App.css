@@ -1,4 +1,5 @@
 .App {
+  height: fit-content;
   text-align: left;
   font-family: 'Courgette', cursive;
 }
