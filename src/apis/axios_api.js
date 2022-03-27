@@ -8,8 +8,8 @@ const TOKEN = `bearer ${storage}`;
 
 
 const api = axios.create({
-    // baseURL: "https://myplaylist-app.herokuapp.com",
-    baseURL: "http://localhost:3001",
+    baseURL: "https://myplaylist-app.herokuapp.com",
+    // baseURL: "http://localhost:3001",
 
 });
 
