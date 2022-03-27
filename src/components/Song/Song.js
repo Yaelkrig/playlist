@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import songIndexContext from '../../Contexts/songIndexContext';
 import api from '../../apis/axios_api';
 import removeContext from '../../Contexts/removeContext';
-import playlistIndexContext from '../../Contexts/playlistIndexContext';
+import playlistIndexContext from '../../Contexts/playPlaylistIndexContext';
 import PlaylistsContext from '../../Contexts/PlaylistsContext';
 
 const Song = ({ song, playlistId, isMy }) => {

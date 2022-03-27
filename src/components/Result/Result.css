@@ -5,12 +5,15 @@
     margin-left: 2%;
     font-family: 'Nanum Gothic', sans-serif;
     line-height: 1.3;
-    display: flex;
+    display: flex !important;
+    justify-content: space-between;
+    align-items:center;
     width: 95% !important;
     cursor: pointer;
 }
 .Result .play_song:hover{
     opacity: 0.6;
+    cursor: pointer;
 }
 .Result .result_img{
     border-image-slice: 10;
@@ -32,10 +35,6 @@ font-family: 'Nanum Gothic', sans-serif;
 .Result button{
     margin-top: 20%;
 }
-.Result .addToPlaylist{
-    margin-top: 25%;
-    height: 3vh; 
-    width: 3vh;
-    border: none;
-    position: relative;
+.addToPlaylist:hover{
+    opacity: 0.6;
 }

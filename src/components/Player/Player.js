@@ -2,7 +2,7 @@ import '../Player/Player.css'
 import { useContext } from 'react';
 import songIndexContext from '../../Contexts/songIndexContext';
 
-const Player = ({ playlist }) => {
+const Player = () => {
     const { songPlayer } = useContext(songIndexContext);
 
     return (

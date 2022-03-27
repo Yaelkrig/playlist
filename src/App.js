@@ -16,19 +16,19 @@ import { createTheme } from '@mui/system';
 import { useEffect, useState } from 'react';
 import SongIndexContext from './Contexts/songIndexContext';
 import PlaylistsContext from './Contexts/PlaylistsContext';
-import PlaylistIndexContext from './Contexts/playlistIndexContext';
 import removeContext from './Contexts/removeContext';
 import api from './apis/axios_api';
 import Help from './components/Help/Help';
 import AboutMe from './components/AboutMe/AboutMe';
 import UserAceessTokenContext from './Contexts/UserAceessTokenContext';
 import IsHomePageContext from './Contexts/IsHomePageContext';
+import PlayPlaylistIndexContext from './Contexts/playPlaylistIndexContext';
 
 
 const App = () => {
   const [songPlayer, setSongPlayer] = useState("");
   const [playlists, setPlaylists] = useState([]);
-  const [playlistIndex, setPlaylistIndex] = useState(0);
+  const [playPlaylist, setPlayPlaylist] = useState([]);
   const [userAccessToken, setUserAccessToken] = useState(localStorage.accessToken);
   const [isHomePage, setIsHomePage] = useState(true);
 
@@ -48,7 +48,6 @@ const App = () => {
         setUserAccessToken(localStorage.accessToken);
         api.get('/playlists/uesr')
           .then(songs => {
-            if (songs.data.message[0] === undefined) return setPlaylistIndex(-1);
             songs.data.message.map(playlist => {
               return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
             })
@@ -64,7 +63,7 @@ const App = () => {
       <UserAceessTokenContext.Provider value={{ userAccessToken, setUserAccessToken }}>
         <SongIndexContext.Provider value={{ songPlayer, setSongPlayer }}>
           <PlaylistsContext.Provider value={{ playlists, setPlaylists }}>
-            <PlaylistIndexContext.Provider value={{ playlistIndex, setPlaylistIndex }}>
+            <PlayPlaylistIndexContext.Provider value={{ playPlaylist, setPlayPlaylist }}>
               <removeContext.Provider value={{ setPlaylists }}>
                 <IsHomePageContext.Provider value={{ isHomePage, setIsHomePage }}>
                   <Router className="App">
@@ -82,7 +81,7 @@ const App = () => {
                   </Router>
                 </IsHomePageContext.Provider>
               </removeContext.Provider>
-            </PlaylistIndexContext.Provider>
+            </PlayPlaylistIndexContext.Provider>
           </PlaylistsContext.Provider>
         </SongIndexContext.Provider>
       </UserAceessTokenContext.Provider>

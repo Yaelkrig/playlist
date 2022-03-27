@@ -6,21 +6,23 @@ import PlaylistsContext from "../../Contexts/PlaylistsContext";
 import Player from "../Player/Player";
 import SongList from "../SongList/SongList";
 import songIndexContext from "../../Contexts/songIndexContext";
+import playPlaylistIndexContext from "../../Contexts/playPlaylistIndexContext";
 
 const PlaylistPlay = () => {
     const { id } = useParams();
     const { playlists } = useContext(PlaylistsContext);
+    const { playPlaylist, setPlayPlaylist } = useContext(playPlaylistIndexContext)
     const { setSongPlayer } = useContext(songIndexContext);
-    const playlist = playlists.filter(playlist => playlist._id === id)[0];
+
     useEffect(() => {
-        setSongPlayer(playlist.songs.length > 0 ? playlist.songs[0].url : null);
+        setSongPlayer(playPlaylist.songs.length > 0 ? playPlaylist.songs[0].url : null);
         window.scrollTo(0, 0)
     }, [])
     return (
         <>
-            <Player playlist={playlist} />
+            <Player />
             <Search className="play_search" />
-            <SongList playlist={playlist} />
+            <SongList />
         </>
     )
 }
