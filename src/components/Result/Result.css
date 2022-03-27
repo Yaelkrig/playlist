@@ -26,6 +26,12 @@ font-family: 'Nanum Gothic', sans-serif;
 .Result button{
     margin-top: 20%;
 }
+.Result .description{
+    margin-left: 20%;
+}
+.Result button{
+    margin-top: 20%;
+}
 .Result .addToPlaylist{
     margin-top: 25%;
     height: 3vh; 

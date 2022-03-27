@@ -13,7 +13,7 @@ const Header = () => {
     }
     useEffect(() => {
         userLoged();
-    }, [userToken])
+    }, [userAccessToken])
     console.log('header');
     return (
         <div className='Header'>

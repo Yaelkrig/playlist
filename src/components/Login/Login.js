@@ -1,12 +1,9 @@
 import './Login.css';
-import React from 'react';
 import { Button, createTheme, TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useNavigate, Link as LinkUp } from 'react-router-dom';
-import Header from '../Header/Header';
-import About from '../About/About';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,7 +13,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@emotion/react';
-import SideBar from '../SideBar/SideBar';
 import api from '../../apis/axios_api';
 import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
 
@@ -47,8 +43,8 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
-    const { setUserAccessToken } = useContext(UserAceessTokenContext)
-    useEffect(() => {
+    const { setUserAccessToken } = React.useContext(UserAceessTokenContext)
+    React.useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
     const {

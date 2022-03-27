@@ -1,15 +1,20 @@
 import { Search } from '@mui/icons-material'
 import { IconButton, Input } from '@mui/material'
 import { createTheme } from '@mui/system'
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import youtube from '../../apis/youtube'
+import IsHomePageContext from '../../Contexts/IsHomePageContext'
+import PlaylistsContext from '../../Contexts/PlaylistsContext'
 import './ItemForm.css'
 
 const ItemForm = ({ setResults }) => {
-    const [value, setValue] = useState("")
+    const { playlists } = useContext(PlaylistsContext);
+    const { isHomePage } = useContext(IsHomePageContext)
+    const [value, setValue] = useState("");
     const inputRef = useRef(null);
+
     const searchSong = async (forSearch) => {
         const res = await youtube.get('/search', {
             params: {
@@ -17,6 +22,12 @@ const ItemForm = ({ setResults }) => {
             }
         })
         setResults(res.data.items);
+        setValue("");
+    }
+    const searchPlaylist = (value) => {
+        const results = playlists.filter(playlist => playlist.title.includes(value));
+        console.log(results);
+        setResults(results);
         setValue("");
     }
 
@@ -41,12 +52,11 @@ const ItemForm = ({ setResults }) => {
         <ThemeProvider theme={theme}>
             <form className="search_input">
                 <Input
-                    disableUnderline={true}
                     ref={inputRef}
                     color="primary"
                     id="search"
                     label="Search"
-                    placeholder='Search'
+                    placeholder={isHomePage ? `Search Playlists` : `Search Songs`}
                     name="search"
                     autoComplete="search"
                     onChange={(e) => { setValue(e.target.value) }}
@@ -57,7 +67,7 @@ const ItemForm = ({ setResults }) => {
                 <IconButton className='search'
                     onClick={(e) => {
                         e.preventDefault()
-                        searchSong(value)
+                        isHomePage ? searchPlaylist(value) : searchSong(value);
                     }}><Search /></IconButton>
             </form>
 

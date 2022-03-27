@@ -4,10 +4,12 @@ import PlaylistsContext from '../../Contexts/PlaylistsContext';
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
+import IsHomePageContext from '../../Contexts/IsHomePageContext';
 
 const PublicPlaylist = () => {
     const navigate = useNavigate();
     const { userAccessToken } = useContext(UserAceessTokenContext);
+    const { setIsHomePage } = useContext(IsHomePageContext);
     const { playlists } = useContext(PlaylistsContext);
     const userId = userAccessToken ? jwt_decode(userAccessToken)._id : null;
     const publicPlaylists = userAccessToken ? playlists.filter(playlist => playlist.createdBy !== userId) : playlists;
@@ -20,7 +22,10 @@ const PublicPlaylist = () => {
                         const playlist_img = playlist.songs.length ? playlist.songs[0].imgUrl : "../images/sound-waves.png";
                         return (
                             <div key={playlist._id} className='playlist'
-                                onClick={() => { navigate(`/playlist/${playlist._id}`) }}>
+                                onClick={() => {
+                                    setIsHomePage(false);
+                                    navigate(`/playlist/${playlist._id}`)
+                                }}>
                                 <img className='palaylist_img' src={playlist_img} alt='palaylist_img' />
                                 <p className='playlist_title'>{playlist.title}</p>
                             </div>)

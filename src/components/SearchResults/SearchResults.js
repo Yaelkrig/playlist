@@ -8,7 +8,7 @@ const SearchResults = ({ results, setResults }) => {
         <div className="SearchResults">
             {results.length > 0 &&
                 results.map((result) => {
-                    return (<Result key={result.id.videoId} details={result} setResults={setResults} />)
+                    return (<Result key={result.id ? result.id.videoId : result._id} details={result} setResults={setResults} />)
                 })}
         </div>
     )

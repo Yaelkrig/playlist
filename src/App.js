@@ -22,6 +22,7 @@ import api from './apis/axios_api';
 import Help from './components/Help/Help';
 import AboutMe from './components/AboutMe/AboutMe';
 import UserAceessTokenContext from './Contexts/UserAceessTokenContext';
+import IsHomePageContext from './Contexts/IsHomePageContext';
 
 
 const App = () => {
@@ -29,6 +30,8 @@ const App = () => {
   const [playlists, setPlaylists] = useState([]);
   const [playlistIndex, setPlaylistIndex] = useState(0);
   const [userAccessToken, setUserAccessToken] = useState(localStorage.accessToken);
+  const [isHomePage, setIsHomePage] = useState(true);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -63,19 +66,21 @@ const App = () => {
           <PlaylistsContext.Provider value={{ playlists, setPlaylists }}>
             <PlaylistIndexContext.Provider value={{ playlistIndex, setPlaylistIndex }}>
               <removeContext.Provider value={{ setPlaylists }}>
-                <Router className="App">
-                  <Header />
-                  <SideBar />
-                  <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/playlist/:id" element={<PlaylistPlay />} />
-                    <Route exact path="/Login" element={<Login />} />
-                    <Route exact path="/SignUp" element={<SignUp />} />
-                    <Route exact path="/help" element={<Help />} />
-                    <Route exact path="/about" element={<AboutMe />} />
-                  </Routes>
-                  <About />
-                </Router>
+                <IsHomePageContext.Provider value={{ isHomePage, setIsHomePage }}>
+                  <Router className="App">
+                    <Header />
+                    <SideBar />
+                    <Routes>
+                      <Route exact path="/" element={<Home />} />
+                      <Route exact path="/playlist/:id" element={<PlaylistPlay />} />
+                      <Route exact path="/Login" element={<Login />} />
+                      <Route exact path="/SignUp" element={<SignUp />} />
+                      <Route exact path="/help" element={<Help />} />
+                      <Route exact path="/about" element={<AboutMe />} />
+                    </Routes>
+                    <About />
+                  </Router>
+                </IsHomePageContext.Provider>
               </removeContext.Provider>
             </PlaylistIndexContext.Provider>
           </PlaylistsContext.Provider>
