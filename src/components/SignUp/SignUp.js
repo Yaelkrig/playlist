@@ -21,6 +21,7 @@ import SideBar from "../SideBar/SideBar";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from "react";
 import api from "../../apis/axios_api";
+import UserAceessTokenContext from "../../Contexts/UserAceessTokenContext";
 
 const theme = createTheme({
     palette: {
@@ -49,6 +50,7 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
+    const { setUserAccessToken } = React.useContext(UserAceessTokenContext)
     React.useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -65,6 +67,7 @@ export default function SignUp() {
 
     const onSubmit = () => {
         localStorage.removeItem("accessToken");
+        setUserAccessToken("");
         logUpDetails = {
             username: getValues("username"),
             password: getValues("password"),
@@ -74,6 +77,7 @@ export default function SignUp() {
             .post("/users/register", logUpDetails)
             .then((res) => {
                 localStorage.setItem('accessToken', res.data.accessToken)
+                setUserAccessToken(res.data.accessToken)
                 navigate('/')
             })
             .catch((e) => {

@@ -1,13 +1,14 @@
 import './Header.css'
 import jwt_decode from "jwt-decode";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
 
 const Header = () => {
-    const userToken = localStorage.accessToken;
+    const { userAccessToken } = useContext(UserAceessTokenContext)
     const [currentUser, setCurrentUser] = useState("Guest");
     const userLoged = () => {
-        if (userToken) {
-            setCurrentUser(jwt_decode(userToken).username)
+        if (userAccessToken) {
+            setCurrentUser(jwt_decode(userAccessToken).username)
         }
     }
     useEffect(() => {

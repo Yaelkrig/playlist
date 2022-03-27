@@ -3,13 +3,15 @@ import { useContext } from 'react';
 import PlaylistsContext from '../../Contexts/PlaylistsContext';
 import { useNavigate } from 'react-router';
 import jwt_decode from "jwt-decode";
+import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
 
 const MyPlaylist = () => {
     const navigate = useNavigate();
+    const { userAccessToken } = useContext(UserAceessTokenContext)
     const { playlists } = useContext(PlaylistsContext);
-    const userId = localStorage.accessToken ? jwt_decode(localStorage.accessToken)._id : null;
+    const userId = userAccessToken ? jwt_decode(userAccessToken)._id : null;
 
-    const MyPlaylists = localStorage.accessToken ? playlists.filter(playlist => playlist.createdBy === userId) : null;
+    const MyPlaylists = userAccessToken ? playlists.filter(playlist => playlist.createdBy === userId) : null;
     return (
         <>
             {

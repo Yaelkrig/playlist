@@ -8,12 +8,15 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Tooltip } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserAceessTokenContext from "../../Contexts/UserAceessTokenContext";
 
 const SideBar = () => {
+    const { userAccessToken, setUserAccessToken } = useContext(UserAceessTokenContext)
     const [isOpen, setIsOpen] = useState(false);
     const handleLogOut = () => {
         localStorage.removeItem("accessToken");
+        setUserAccessToken("")
     }
     return (
         <div className="Side"
@@ -36,12 +39,12 @@ const SideBar = () => {
                             <HomeIcon className="icon" />
                         </LinkUp>
                     </Tooltip>
-                    {!localStorage.accessToken && <Tooltip title="Login" placement="right-start">
+                    {!userAccessToken && <Tooltip title="Login" placement="right-start">
                         <LinkUp to={'/Login'} color="inherit">
                             <LoginIcon className="icon" />
                         </LinkUp>
                     </Tooltip>}
-                    {localStorage.accessToken && <Tooltip title="Logout" placement="right-start">
+                    {userAccessToken && <Tooltip title="Logout" placement="right-start">
                         <LinkUp to={'/Login'} color="inherit" >
                             <LogoutIcon className="icon" onClick={() => {
                                 handleLogOut();

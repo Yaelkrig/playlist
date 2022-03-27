@@ -1,4 +1,5 @@
-import './Login.css'
+import './Login.css';
+import React from 'react';
 import { Button, createTheme, TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/system';
@@ -17,6 +18,7 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@emotion/react';
 import SideBar from '../SideBar/SideBar';
 import api from '../../apis/axios_api';
+import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
 
 const theme = createTheme({
     palette: {
@@ -45,7 +47,8 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
-    React.useEffect(() => {
+    const { setUserAccessToken } = useContext(UserAceessTokenContext)
+    useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
     const {
@@ -73,6 +76,7 @@ export default function LogIn() {
             .then((res) => {
                 if (res.data) {
                     localStorage.setItem('accessToken', res.data);
+                    setUserAccessToken(res.data);
                     navigate("/");
                 }
             })
