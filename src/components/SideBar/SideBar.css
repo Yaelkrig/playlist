@@ -6,12 +6,15 @@
     width: 3%;
     margin-left: 1.7%;
     padding-bottom: 1%;
-    border: 4px solid #e76796;
+    border: 4px solid #00cddc65;
     border-radius: 15vh;
     box-sizing: unset;
 }
 .Side .menu{
     margin-left: 12%;
+}
+.icon{
+    color: white;
 }
 .Side .css-i4bv87-MuiSvgIcon-root {
     padding: 10%;
@@ -20,7 +23,7 @@
     box-sizing: unset;
 }
 .Side .css-i4bv87-MuiSvgIcon-root:hover {
-    background-color:#e76796 ;
+    background-color:#00cedc;
     cursor: pointer;
     opacity: 0.5;
 }
@@ -33,7 +36,7 @@
 } */
 
 .Side .MuiRating-iconHover{
-    background-color:#e76796 ;
+    background-color:#00cedc ;
     cursor: pointer;
     opacity: 0.5;
 }

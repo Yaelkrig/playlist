@@ -1,8 +1,10 @@
 .App {
   text-align: left;
-  
+  font-family: 'Courgette', cursive;
 }
 body{
+  background-color: rgba(36, 32, 32, 0.705) !important;
+  color: white;
     margin: 0;
     padding: 0;
     border: 0;

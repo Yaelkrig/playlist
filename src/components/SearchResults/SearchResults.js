@@ -2,14 +2,14 @@
 import Result from "../Result/Result";
 import "./SearchResults.css"
 
-const SearchResults = ({ results }) => {
+const SearchResults = ({ results, setResults }) => {
 
     return (
         <div className="SearchResults">
-            {results.length > 0 ?
+            {results.length > 0 &&
                 results.map((result) => {
-                    return (<Result key={result.id.videoId} details={result} />)
-                }) : null}
+                    return (<Result key={result.id.videoId} details={result} setResults={setResults} />)
+                })}
         </div>
     )
 }

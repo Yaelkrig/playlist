@@ -1,45 +1,19 @@
 import '../Player/Player.css'
-import Plyr from "plyr-react";
-import "plyr-react/dist/plyr.css";
-import { useContext, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import songIndexContext from '../../Contexts/songIndexContext';
 
-const Player = () => {
-    const { songPlayer } = useContext(songIndexContext)
-    console.log('player render');
-    // const [ended, setEnded] = useState(false)
-    const videoSrc = {
-        type: "video",
-        sources: [
-            {
-                src: songPlayer,
-                provider: "youtube"
-            }
+const Player = ({ playlist }) => {
+    const { songPlayer } = useContext(songIndexContext);
 
-        ],
-    };
-    const plyrRef = useRef();
-
-    useEffect(() => {
-        // console.log("##############", plyrRef.current.plyr)
-        // plyrRef.current.plyr.fullscreen.enter()
-
-        // plyrRef.current.plyr.on("ended", () => {
-        //     console.log('endd');
-        // })
-    }
-    )
     return (
         <div className='Player'  >
-            <Plyr
-                ref={plyrRef}
-                source={videoSrc}
-                options={{
-                    ratio: '5:3',
-                    autoplay: true,
-
-                }}
-            />
+            <iframe title='youtube_iframe' width="90%" height="315"
+                frameBorder="0"
+                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                onEnded={(e) => { console.log('end', e); }}
+                src={`https://www.youtube.com/embed/${songPlayer}?autoplay=1`}>
+            </iframe>
         </div >
     )
 }

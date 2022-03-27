@@ -11,7 +11,8 @@ const Search = () => {
     return (
         <div className='Search'>
             <ItemForm setResults={setResults} />
-            <SearchResults results={results} />
+            {results.length > 0 && <SearchResults results={results} setResults={setResults} />
+            }
         </div>
     )
 }

@@ -1,7 +1,10 @@
 .SearchResults{
 position: absolute;
-    margin-left: 68%;
-    width: 30rem;
+    margin-left: 0%;
+    background-color: rgb(36, 32, 32) !important;
+    width: 33rem;
     height: 24rem;
     overflow: auto;
+    z-index: 1;
+    opacity: 1;
 }

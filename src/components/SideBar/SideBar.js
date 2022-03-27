@@ -20,7 +20,7 @@ const SideBar = () => {
                 setIsOpen(false)
             }} >
             <Tooltip title="Menu" placement="right-start">
-                <MenuIcon className="menu"
+                <MenuIcon className="icon menu"
                     onMouseOver={() => {
                         setIsOpen(true)
                     }}
@@ -31,24 +31,24 @@ const SideBar = () => {
                 >
                     <Tooltip title="Home" placement="right-start">
                         <LinkUp to={'/'} >
-                            <HomeIcon />
+                            <HomeIcon className="icon" />
                         </LinkUp>
                     </Tooltip>
                     <Tooltip title="Login" placement="right-start">
                         <LinkUp to={'/Login'} color="inherit">
-                            <LoginIcon />
+                            <LoginIcon className="icon" />
                         </LinkUp>
                     </Tooltip>
                     <Tooltip title="Logout" placement="right-start">
                         <LinkUp to={'/Login'} color="inherit" >
-                            <LogoutIcon onClick={() => {
+                            <LogoutIcon className="icon" onClick={() => {
                                 handleLogOut();
                             }} />
                         </LinkUp>
                     </Tooltip>
                     <Tooltip title="Sign Up" placement="right-start">
                         <LinkUp to={'/SignUp'} color="inherit" >
-                            <AccountCircleIcon />
+                            <AccountCircleIcon className="icon" />
                         </LinkUp>
                     </Tooltip>
                 </div>

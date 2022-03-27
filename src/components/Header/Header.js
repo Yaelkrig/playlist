@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
 import './Header.css'
+import jwt_decode from "jwt-decode";
+import { useEffect, useState } from 'react';
 
 const Header = () => {
     const userToken = localStorage.accessToken;
     const [currentUser, setCurrentUser] = useState("Guest");
     const userLoged = () => {
         if (userToken) {
-            setCurrentUser(JSON.parse(atob(userToken.split(".")[1])).username)
+            setCurrentUser(jwt_decode(userToken).username)
         }
     }
     useEffect(() => {
@@ -15,7 +16,7 @@ const Header = () => {
     console.log('header');
     return (
         <div className='Header'>
-            {/* <div className='logo'></div> */}
+            <img className='logo' src='../images/sound-waves.png' alt='logo' />
             <h1>
                 Playlist
             </h1>

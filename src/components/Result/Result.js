@@ -8,7 +8,7 @@ import songIndexContext from '../../Contexts/songIndexContext';
 import PlaylistsContext from '../../Contexts/PlaylistsContext';
 import api from '../../apis/axios_api';
 
-const Result = ({ details }) => {
+const Result = ({ details, setResults }) => {
     const { setSongPlayer } = useContext(songIndexContext);
     const { playlistIndex } = useContext(playlistIndexContext);
     const { playlists, setPlaylists } = useContext(PlaylistsContext)
@@ -43,7 +43,7 @@ const Result = ({ details }) => {
                 <IconButton edge="end" aria-label="delete"
                     disabled={disButton}
                 >
-                    <AddIcon
+                    <AddIcon className='icon'
                         onClick={() => {
                             songToAdd = {
                                 id: details.id.videoId,
@@ -52,6 +52,7 @@ const Result = ({ details }) => {
                                 url: details.id.videoId,
                                 imgUrl: details.snippet.thumbnails.default.url,
                             }
+                            setResults("")
                             addSong(songToAdd, playlistIndex);
                         }}
                     />
@@ -61,6 +62,7 @@ const Result = ({ details }) => {
             <span className='play_song'
                 onClick={() => {
                     setSongPlayer(songUrl)
+                    setResults("");
                 }}
             >
                 <ListItemAvatar >

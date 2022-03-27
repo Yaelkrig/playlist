@@ -21,10 +21,12 @@ import api from '../../apis/axios_api';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#d35c89',
+            main: '#00cedc',
+            contrastText: '#fff',
         },
         secondary: {
-            main: '#616161',
+            main: '#00cedc',
+            contrastText: '#fff',
         },
     },
 });
