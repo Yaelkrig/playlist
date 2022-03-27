@@ -10,6 +10,10 @@
 padding: 1% 2%;
 border-radius: 15px;
 }
-.song:hover{
-    opacity: 0.6;
+.play{
+  display: flex;
+
+}
+.play:hover, .delete_song:hover{
+  opacity: 0.6;
 }

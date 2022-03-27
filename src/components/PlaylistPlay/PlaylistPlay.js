@@ -12,8 +12,8 @@ const PlaylistPlay = () => {
     const { playlists } = useContext(PlaylistsContext);
     const { setSongPlayer } = useContext(songIndexContext);
     const playlist = playlists.filter(playlist => playlist._id === id)[0];
-    setSongPlayer(playlist.songs.length > 0 ? playlist.songs[0].url : null);
     useEffect(() => {
+        setSongPlayer(playlist.songs.length > 0 ? playlist.songs[0].url : null);
         window.scrollTo(0, 0)
     }, [])
     return (

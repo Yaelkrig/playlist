@@ -46,7 +46,6 @@ const App = () => {
             songs.data.message.map(playlist => {
               return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])
             })
-            setSongPlayer(songs.data.message[0].songs[0].url)
           })
         // if (!rememberUser)  handleLogOut();
       } catch (e) {
