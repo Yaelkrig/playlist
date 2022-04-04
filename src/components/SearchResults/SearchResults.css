@@ -1,5 +1,6 @@
 .SearchResults{
 position: absolute;
+border-radius: 7px;
     margin-left: 0%;
     margin-top: 2%;
     background-color: rgb(36, 32, 32) !important;

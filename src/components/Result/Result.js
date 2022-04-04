@@ -6,15 +6,16 @@ import { useContext } from 'react';
 import songIndexContext from '../../Contexts/songIndexContext';
 import PlaylistsContext from '../../Contexts/PlaylistsContext';
 import api from '../../apis/axios_api';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import IsHomePageContext from '../../Contexts/IsHomePageContext';
 import playPlaylistIndexContext from '../../Contexts/playPlaylistIndexContext';
 
 const Result = ({ details, setResults }) => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const { setSongPlayer } = useContext(songIndexContext);
     const { setIsHomePage } = useContext(IsHomePageContext);
-    const { setPlayPlaylist } = useContext(playPlaylistIndexContext)
+    const { playPlaylist, setPlayPlaylist } = useContext(playPlaylistIndexContext)
     const { playlistIndex } = useContext(playlistIndexContext);
     const { playlists, setPlaylists } = useContext(PlaylistsContext);
     const title = details.snippet ? details.snippet.title : details.title;
@@ -23,16 +24,17 @@ const Result = ({ details, setResults }) => {
     let songToAdd = {};
 
     const addSong = (details, index) => {
-        if (playlists[index]) {
-            const data = JSON.stringify({
+        if (id) {
+            console.log(details);
+            const data = {
                 ...details,
-                playlist: playlists[index]._id
-            })
+                playlist: id
+            }
             try {
                 api.post('/songs/add', data)
                     .then(res => {
-                        console.log(res);
-                        setPlayPlaylist(prePlaylist => res.data._id === prePlaylist._id)
+                        console.log({ res });
+                        setPlayPlaylist(res.data.filter(playlist => playlist._id === id))
                         setPlaylists(res.data);
                     });
             } catch (e) {

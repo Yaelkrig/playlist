@@ -9,8 +9,6 @@ import songIndexContext from "../../Contexts/songIndexContext";
 import playPlaylistIndexContext from "../../Contexts/playPlaylistIndexContext";
 
 const PlaylistPlay = () => {
-    const { id } = useParams();
-    const { playlists } = useContext(PlaylistsContext);
     const { playPlaylist, setPlayPlaylist } = useContext(playPlaylistIndexContext)
     const { setSongPlayer } = useContext(songIndexContext);
 

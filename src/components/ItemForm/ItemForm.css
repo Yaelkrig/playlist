@@ -1,12 +1,10 @@
 .ItemForm{
-    width: 20%;
+    display: flex;
+    width: 25%;
     text-align: left;
 }
-.search_input{
-    width: 170% !important;
-    margin-left: -20%;
-}
-.ItemForm .search{
+
+.ItemForm .search_btn{
     background-color: inherit;
     color: white;
     height: 1.5rem; 
@@ -17,14 +15,15 @@
 .css-7ws05s-MuiInputBase-root-MuiInput-root{
     width: 85% !important;
 }
-.ItemForm input{
+.ItemForm .search_input{
     background-color: unset;
-    width: 50%;
+    width: 100%;
     height: 3vh;
     margin-left: 3vh;
     margin-right: 2vh;
     border-radius: 5vh;
     padding-left: 2vh;
+    color: white;
 }
 .add_song{
     top: 1.3vh;

@@ -50,26 +50,26 @@ const ItemForm = ({ setResults }) => {
     })
     return <div className='ItemForm'>
         <ThemeProvider theme={theme}>
-            <form className="search_input">
-                <Input
-                    ref={inputRef}
-                    color="primary"
-                    id="search"
-                    label="Search"
-                    placeholder={isHomePage ? `Search Playlists` : `Search Songs`}
-                    name="search"
-                    autoComplete="search"
-                    onChange={(e) => { setValue(e.target.value) }}
-                    value={value}
-                >
-                </Input>
+            <Input
+                className='search_input'
+                ref={inputRef}
+                color="primary"
+                id="search"
+                label="Search"
+                placeholder={isHomePage ? `Search Playlists` : `Search Songs`}
+                name="search"
+                autoComplete="search"
+                onChange={(e) => { setValue(e.target.value) }}
+                value={value}
+            >
+            </Input>
 
-                <IconButton className='search'
-                    onClick={(e) => {
-                        e.preventDefault()
-                        isHomePage ? searchPlaylist(value) : searchSong(value);
-                    }}><Search /></IconButton>
-            </form>
+            <IconButton className='search_btn'
+                onClick={(e) => {
+                    e.preventDefault()
+                    isHomePage ? searchPlaylist(value) : searchSong(value);
+                }}><Search /></IconButton>
+
 
         </ThemeProvider>
     </div>

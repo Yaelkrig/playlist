@@ -8,7 +8,21 @@
 .playlists_header{
 margin-left: 10%;
 font-family: 'Courgette', cursive;
-
+}
+.mine_con{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: stretch;
+    justify-content: flex-start;
+    align-items: center;
+} 
+.add_playlist_icon{
+    margin-left: 1%;
+}
+.add_playlist_icon:hover{
+    cursor: pointer;
+    opacity: 0.6;
 }
 .playlist{
     margin-left: 5%;
@@ -25,4 +39,10 @@ font-family: 'Courgette', cursive;
 }
 .playlist_title{
     font-family: 'Courgette', cursive;
+}
+.not_connected_user{
+    margin-left: 10%;
+    margin-top: 3%;
+    font-family: 'Courgette', cursive;
+display: block;
 }

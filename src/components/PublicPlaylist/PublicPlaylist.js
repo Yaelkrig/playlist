@@ -6,6 +6,8 @@ import jwt_decode from "jwt-decode";
 import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
 import IsHomePageContext from '../../Contexts/IsHomePageContext';
 import playPlaylistIndexContext from '../../Contexts/playPlaylistIndexContext';
+import Spinner from '../../Spinner/Spinner';
+import DisplayPlaylistHome from '../DisplayPlaylistHome/DisplayPlaylistHome';
 
 const PublicPlaylist = () => {
     const navigate = useNavigate();
@@ -19,22 +21,14 @@ const PublicPlaylist = () => {
         <>
             <h2 className='playlists_header'>Public Playlists</h2>
             <div className="playlists_container" >
-                {publicPlaylists &&
-                    publicPlaylists.map(playlist => {
+                {publicPlaylists ?
+                    publicPlaylists.filter(playlist => playlist.songs.length > 0).map(playlist => {
                         const playlist_img = playlist.songs.length ? playlist.songs[0].imgUrl : "../images/sound-waves.png";
                         const id = playlist._id;
                         return (
-                            <div key={playlist._id} className='playlist'
-                                onClick={() => {
-                                    setIsHomePage(false);
-                                    setPlayPlaylist(playlists.filter(playlist => playlist._id === id)[0])
-                                    navigate(`/playlist/${playlist._id}`)
-                                }}>
-                                <img className='palaylist_img' src={playlist_img} alt='palaylist_img' />
-                                <p className='playlist_title'>{playlist.title}</p>
-                            </div>)
+                            <DisplayPlaylistHome playlist={playlist} playlist_img={playlist_img} id={id} />)
                     }
-                    )
+                    ) : <Spinner />
                 }
             </div >
         </>

@@ -46,7 +46,7 @@ const App = () => {
     if (!playlists[0]) {
       try {
         setUserAccessToken(localStorage.accessToken);
-        api.get('/playlists/uesr')
+        api.get('/playlists/user')
           .then(songs => {
             songs.data.message.map(playlist => {
               return setPlaylists(prevPlaylists => [...prevPlaylists, playlist])

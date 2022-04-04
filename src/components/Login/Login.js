@@ -55,7 +55,7 @@ export default function LogIn() {
         formState: { errors },
     } = useForm();
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loged, setLoged] = useState(true);
     let LoginDetails = {};
@@ -63,7 +63,7 @@ export default function LogIn() {
     const onSubmit = () => {
         setLoged(true);
         LoginDetails = {
-            username: getValues("username"),
+            email: getValues("email"),
             password: getValues("password"),
         };
         localStorage.removeItem("accessToken");
@@ -71,6 +71,7 @@ export default function LogIn() {
             .post('/users/login', LoginDetails)
             .then((res) => {
                 if (res.data) {
+                    console.log(res.data);
                     localStorage.setItem('accessToken', res.data);
                     setUserAccessToken(res.data);
                     navigate("/");
@@ -78,6 +79,9 @@ export default function LogIn() {
             })
             .catch((e) => {
                 console.log(e);
+                if (e.response) {
+                    console.log(e.response);
+                }
             });
         reset({
             password: "",
@@ -108,29 +112,27 @@ export default function LogIn() {
                         onSubmit={handleSubmit(onSubmit)}
                         sx={{ mt: 1 }}>
                         <TextField
-                            value={username}
+                            value={email}
                             onInput={(e) => {
-                                setUsername(e.target.value)
+                                setEmail(e.target.value)
                             }}
                             margin="normal"
-                            required
                             fullWidth
-                            id="username"
-                            label="User Name"
-                            name="username"
-                            autoComplete="username"
+                            id="email"
+                            label="Email"
+                            name="email"
+                            autoComplete="email"
                             autoFocus
                             onError={(e) => { console.log(e); }}
-                            {...register("username", {
+                            {...register("email", {
                                 required: true,
                                 minLength: 2,
-                                maxLength: 10,
                             })}
                         />
-                        {errors.username && (
+                        {errors.email && (
                             <div className="error-invalid-value">
                                 {" "}
-                                This field is required or the username is invalid
+                                This field is required or the email is invalid
                             </div>
                         )}
                         <TextField
@@ -139,7 +141,6 @@ export default function LogIn() {
                                 setPassword(e.target.value)
                             }}
                             margin="normal"
-                            required
                             fullWidth
                             name="password"
                             label="Password"

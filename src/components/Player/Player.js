@@ -7,7 +7,7 @@ const Player = () => {
 
     return (
         <div className='Player'  >
-            <iframe title='youtube_iframe' width="90%" height="315"
+            <iframe title='youtube_iframe' width="90%" height="350"
                 frameBorder="0"
                 allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

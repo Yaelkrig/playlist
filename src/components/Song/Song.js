@@ -1,15 +1,11 @@
-import { Avatar, IconButton, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material';
 import './Song.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import songIndexContext from '../../Contexts/songIndexContext';
 import api from '../../apis/axios_api';
 import removeContext from '../../Contexts/removeContext';
-import playlistIndexContext from '../../Contexts/playPlaylistIndexContext';
-import PlaylistsContext from '../../Contexts/PlaylistsContext';
 
 const Song = ({ song, playlistId, isMy }) => {
-    const { playlists } = useContext(PlaylistsContext)
     const { setPlaylists } = useContext(removeContext);
     const { setSongPlayer } = useContext(songIndexContext);
 
