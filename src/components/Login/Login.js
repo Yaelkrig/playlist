@@ -1,11 +1,12 @@
 import './Login.css';
-import { Button, createTheme, TextField } from '@mui/material';
+import { Button, createTheme, FilledInput, FormControl, IconButton, Input, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useNavigate, Link as LinkUp } from 'react-router-dom';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -15,6 +16,7 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@emotion/react';
 import api from '../../apis/axios_api';
 import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
+import { Message, Visibility, VisibilityOff } from '@mui/icons-material';
 
 const theme = createTheme({
     palette: {
@@ -43,6 +45,7 @@ function Copyright(props) {
 }
 
 export default function LogIn() {
+    const [showPassword, setShowPassword] = useState(false)
     const { setUserAccessToken } = React.useContext(UserAceessTokenContext)
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -50,6 +53,7 @@ export default function LogIn() {
     const {
         register,
         handleSubmit,
+        setError,
         getValues,
         reset,
         formState: { errors },
@@ -80,6 +84,7 @@ export default function LogIn() {
             .catch((e) => {
                 console.log(e);
                 if (e.response) {
+                    e.response.status === 400 ? setError('password', { type: Message, message: "do not exist" }) : console.log(e.response.status);
                     console.log(e.response);
                 }
             });
@@ -111,58 +116,73 @@ export default function LogIn() {
                     <Box component="form"
                         onSubmit={handleSubmit(onSubmit)}
                         sx={{ mt: 1 }}>
-                        <TextField
-                            value={email}
-                            onInput={(e) => {
-                                setEmail(e.target.value)
-                            }}
-                            margin="normal"
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            onError={(e) => { console.log(e); }}
-                            {...register("email", {
-                                required: true,
-                                minLength: 2,
-                            })}
-                        />
+                        <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <OutlinedInput
+                                id="email"
+                                autoFocus
+                                name="email"
+                                type='text'
+                                value={email}
+                                onInput={(e) => {
+                                    setEmail(e.target.value)
+                                }}
+                                {...register("email", {
+                                    required: true,
+                                    minLength: 4,
+                                })}
+                                autoComplete="email"
+                                onError={(e) => { console.log(e); }}
+                                {...register("email", {
+                                    required: true,
+                                    minLength: 2,
+                                })}
+                                label="Email"
+                            />
+                        </FormControl>
                         {errors.email && (
                             <div className="error-invalid-value">
                                 {" "}
                                 This field is required or the email is invalid
                             </div>
                         )}
-                        <TextField
-                            value={password}
-                            onInput={(e) => {
-                                setPassword(e.target.value)
-                            }}
-                            margin="normal"
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            {...register("password", {
-                                required: true,
-                                minLength: 4,
-                                maxLength: 10,
-                            })}
-                        />
+                        <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <OutlinedInput
+                                id="password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onInput={(e) => { setPassword(e.target.value) }}
+                                margin="normal"
+                                fullWidth
+                                {...register("password", {
+                                    required: true,
+                                    minLength: 4,
+                                    maxLength: 10,
+                                })}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowPassword(preValue => !preValue)}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Password"
+                            />
+                        </FormControl>
                         {errors.password && (
                             <div className="error-invalid-value">
                                 This field is required or the password is invalid
                             </div>
                         )}
-                        {!loged && (
+                        {/* {!loged && (
                             <div className='error-invalid-value'>
                                 User information is invalid
                             </div>
-                        )}
+                        )} */}
                         {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -193,6 +213,6 @@ export default function LogIn() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
-        </ThemeProvider>
+        </ThemeProvider >
     );
 }
