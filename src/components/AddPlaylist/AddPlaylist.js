@@ -48,8 +48,8 @@ const AddPlaylist = ({ setAddPlay }) => {
                     </Input>
                     <Tooltip title="create playlist" placement="right-start">
                         <IconButton onClick={(e) => {
-                            addPlaylist();
                             setPlaylistName("");
+                            addPlaylist();
                         }}>
                             <AddIcon className="add_playlist" fontSize="large" />
                         </IconButton>

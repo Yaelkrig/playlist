@@ -30,6 +30,9 @@ const ItemForm = ({ setResults }) => {
         setResults(results);
         setValue("");
     }
+    const handleEnterSearch = () => {
+        isHomePage ? searchPlaylist(value) : searchSong(value);
+    }
 
     const theme = createTheme({
         palette: {
@@ -48,7 +51,6 @@ const ItemForm = ({ setResults }) => {
     useEffect(() => {
         inputRef.current.focus();
     })
-    console.log(isHomePage);
     return <div className='ItemForm'>
         <ThemeProvider theme={theme}>
             <Input
@@ -62,13 +64,17 @@ const ItemForm = ({ setResults }) => {
                 autoComplete="search"
                 onChange={(e) => { setValue(e.target.value) }}
                 value={value}
+                onKeyDown={(e) => {
+                    console.log(e);
+                    if (e.keyCode === 13) handleEnterSearch()
+                }}
             >
             </Input>
 
             <IconButton className='search_btn'
                 onClick={(e) => {
                     e.preventDefault()
-                    isHomePage ? searchPlaylist(value) : searchSong(value);
+                    handleEnterSearch()
                 }}><Search /></IconButton>
 
 

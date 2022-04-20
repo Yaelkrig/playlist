@@ -32,11 +32,11 @@
 .exit_add {
     margin-left: 0%;
     margin-top: 0%;
-    border-radius: 15px;
+    border-radius: 45px;
     border: none;
     color: white;
     background-color: inherit;
-    height: 10%;
+    height: 30%;
     font-size: x-large;
     cursor: pointer;
 }

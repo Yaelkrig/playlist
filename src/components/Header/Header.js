@@ -9,7 +9,7 @@ const Header = () => {
     const { userAccessToken } = useContext(UserAceessTokenContext);
     const [currentUser, setCurrentUser] = useState("Guest");
     const navigate = useNavigate()
-
+    console.log(userAccessToken);
     const userLoged = () => {
         if (userAccessToken) {
             setCurrentUser(jwt_decode(userAccessToken).username)
@@ -27,7 +27,7 @@ const Header = () => {
             </h1>
             {currentUser &&
                 <Avatar className='profile_icon'
-                    onClick={() => navigate('/profile')}>{currentUser[0]}</Avatar>}
+                    onClick={() => navigate('/profile')}>{userAccessToken ? currentUser[0] : '-'}</Avatar>}
         </div>
     )
 }
