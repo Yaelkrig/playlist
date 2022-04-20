@@ -13,6 +13,7 @@
 
 .Side .menu {
     margin-left: 12%;
+    cursor: pointer;
 }
 
 .Side .icon {
