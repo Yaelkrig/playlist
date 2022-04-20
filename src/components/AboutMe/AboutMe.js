@@ -2,6 +2,7 @@ import './AboutMe.css';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import PhoneIcon from '@mui/icons-material/Phone';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Tooltip } from '@mui/material';
 
 const AboutMe = () => {
@@ -33,6 +34,11 @@ const AboutMe = () => {
                     <a href='https://github.com/Yaelkrig'
                         rel="noreferrer"
                         target={"_blank"}><GitHubIcon className='about_icon' sx={{ fontSize: 50 }} /></a>
+                </Tooltip>
+                <Tooltip title="My Linkedin" placement="right-start">
+                    <a href='www.linkedin.com/in/yael-krigman'
+                        rel="noreferrer"
+                        target={"_blank"}><LinkedInIcon className='about_icon' sx={{ fontSize: 50 }} /></a>
                 </Tooltip>
             </div>
 

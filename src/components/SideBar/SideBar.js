@@ -10,9 +10,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Tooltip } from "@mui/material";
 import { useContext, useState } from "react";
 import UserAceessTokenContext from "../../Contexts/UserAceessTokenContext";
+import IsHomePageContext from "../../Contexts/IsHomePageContext";
 
 const SideBar = () => {
-    const { userAccessToken, setUserAccessToken } = useContext(UserAceessTokenContext)
+    const { userAccessToken, setUserAccessToken } = useContext(UserAceessTokenContext);
     const [isOpen, setIsOpen] = useState(false);
     const handleLogOut = () => {
         localStorage.removeItem("accessToken");

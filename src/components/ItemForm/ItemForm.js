@@ -48,6 +48,7 @@ const ItemForm = ({ setResults }) => {
     useEffect(() => {
         inputRef.current.focus();
     })
+    console.log(isHomePage);
     return <div className='ItemForm'>
         <ThemeProvider theme={theme}>
             <Input

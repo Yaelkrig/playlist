@@ -1,4 +1,4 @@
-.about_me_conteiner{
+.about_me_conteiner {
     font-family: 'Courgette', cursive;
     margin-left: 10%;
     align-items: center;
@@ -7,18 +7,22 @@
     width: 70%;
     font-size: 1.3rem;
 }
-.about_header{
+
+.about_header {
     margin-left: -3%;
 }
-.about_icon{
+
+.about_icon {
     color: white;
-    margin-left: 10%;
+
 }
-.about_icon:hover{
+
+.about_icon:hover {
     cursor: pointer;
     opacity: 0.6;
 }
-.contact_icons{
+
+.contact_icons {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -27,15 +31,19 @@
     justify-content: space-between;
     width: 40%;
 }
-.contact_header{
+
+.contact_header {
     display: inline-flex;
+    margin-right: 28%;
 }
-.more_projects_con{
+
+.more_projects_con {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 40%;
 }
-.more_projects{
+
+.more_projects {
     display: inline-flex;
 }

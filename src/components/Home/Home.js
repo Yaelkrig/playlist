@@ -2,11 +2,14 @@ import './Home.css'
 import Search from '../Search/Search';
 import MyPlaylist from '../MyPlaylist/MyPlaylist';
 import PublicPlaylist from '../PublicPlaylist/PublicPlaylist';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import IsHomePageContext from '../../Contexts/IsHomePageContext';
 
 
 const Home = () => {
+    const { setIsHomePage } = useContext(IsHomePageContext);
     useEffect(() => {
+        setIsHomePage(true)
         window.scrollTo(0, 0)
     }, [])
     return (
