@@ -50,7 +50,11 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-    const { setUserAccessToken } = React.useContext(UserAceessTokenContext)
+    const { setUserAccessToken } = React.useContext(UserAceessTokenContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [fullNmae, setFullName] = useState("");
     React.useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -66,6 +70,7 @@ export default function SignUp() {
     const navigate = useNavigate();
 
     const onSubmit = () => {
+        console.log('kjdhfknzl');
         localStorage.removeItem("accessToken");
         setUserAccessToken("");
         logUpDetails = {
@@ -73,6 +78,7 @@ export default function SignUp() {
             password: getValues("password"),
             email: getValues('email')
         }
+        console.log(logUpDetails);
         api
             .post("/users/register", logUpDetails)
             .then((res) => {
@@ -109,30 +115,15 @@ export default function SignUp() {
                         onSubmit={handleSubmit(onSubmit)}
                         sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    onFocus={() => setIsSignUp(true)}
-                                    autoComplete="given-name"
-                                    name="fullName"
-                                    required
-                                    fullWidth
-                                    id="fullName"
-                                    label="Full Name"
-                                    autoFocus
-                                    onError={(e) => { console.log(e); }}
-                                    {...register("fullname", {
-                                        required: true,
-                                        minLength: 2,
-                                        maxLength: 10,
-                                    })}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+
+                            <Grid item xs={12} >
                                 <TextField
                                     required
                                     fullWidth
+                                    value={username}
+                                    onInput={(e) => setUsername(e.target.value)}
                                     id="username"
-                                    label="User Name"
+                                    label="Name"
                                     // value={setUsernameValue(usernameValue)}
                                     name="userName"
                                     autoComplete=" user-name"
@@ -154,6 +145,8 @@ export default function SignUp() {
                                     required
                                     fullWidth
                                     id="email"
+                                    value={email}
+                                    onInput={(e) => setEmail(e.target.value)}
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
@@ -171,6 +164,8 @@ export default function SignUp() {
                                     name="password"
                                     // value={setPasswordValue(passwordValue)}
                                     label="Password"
+                                    value={password}
+                                    onInput={(e) => setPassword(e.target.value)}
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
@@ -199,6 +194,7 @@ export default function SignUp() {
                             </Grid>
                         </Grid>
                         <Button
+                            onClick={() => onSubmit()}
                             className="submit_button"
                             type="submit"
                             fullWidth

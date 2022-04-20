@@ -9,7 +9,7 @@ import songIndexContext from "../../Contexts/songIndexContext";
 import playPlaylistIndexContext from "../../Contexts/playPlaylistIndexContext";
 
 const PlaylistPlay = () => {
-    const { playPlaylist, setPlayPlaylist } = useContext(playPlaylistIndexContext)
+    const { playPlaylist } = useContext(playPlaylistIndexContext)
     const { setSongPlayer } = useContext(songIndexContext);
 
     useEffect(() => {

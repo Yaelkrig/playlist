@@ -19,6 +19,7 @@ import PlaylistsContext from './Contexts/PlaylistsContext';
 import removeContext from './Contexts/removeContext';
 import api from './apis/axios_api';
 import Help from './components/Help/Help';
+import Profile from './components/Profile/Profile';
 import AboutMe from './components/AboutMe/AboutMe';
 import UserAceessTokenContext from './Contexts/UserAceessTokenContext';
 import IsHomePageContext from './Contexts/IsHomePageContext';
@@ -72,6 +73,7 @@ const App = () => {
                     <Routes>
                       <Route exact path="/" element={<Home />} />
                       <Route exact path="/playlist/:id" element={<PlaylistPlay />} />
+                      <Route exact path="/profile" element={<Profile />} />
                       <Route exact path="/Login" element={<Login />} />
                       <Route exact path="/SignUp" element={<SignUp />} />
                       <Route exact path="/help" element={<Help />} />

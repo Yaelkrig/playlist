@@ -17,7 +17,7 @@ const Result = ({ details, setResults }) => {
     const { setIsHomePage } = useContext(IsHomePageContext);
     const { playPlaylist, setPlayPlaylist } = useContext(playPlaylistIndexContext)
     const { playlistIndex } = useContext(playlistIndexContext);
-    const { playlists, setPlaylists } = useContext(PlaylistsContext);
+    const { setPlaylists } = useContext(PlaylistsContext);
     const title = details.snippet ? details.snippet.title : details.title;
     const songUrl = details.snippet ? details.id.videoId : details._id;
     const imgUrl = details.snippet ? details.snippet.thumbnails.default.url : details.songs[0].imgUrl
@@ -25,7 +25,12 @@ const Result = ({ details, setResults }) => {
 
     const addSong = (details, index) => {
         if (id) {
+            console.log(playPlaylist.songs);
             console.log(details);
+            if (playPlaylist.songs.filter(song => song.url === details.url).length > 0) {
+                console.log('already exist');
+                return false
+            }
             const data = {
                 ...details,
                 playlist: id
@@ -33,7 +38,8 @@ const Result = ({ details, setResults }) => {
             try {
                 api.post('/songs/add', data)
                     .then(res => {
-                        console.log({ res });
+                        console.log("res", res.data);
+                        console.log("filtered", res.data.filter(playlist => playlist._id === id));
                         setPlayPlaylist(res.data.filter(playlist => playlist._id === id))
                         setPlaylists(res.data);
                     });

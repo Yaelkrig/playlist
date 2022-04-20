@@ -1,0 +1,9 @@
+.profile_container {
+    font-family: 'Courgette', cursive;
+    margin-left: 15%;
+    align-items: center;
+    border: 1px solid white;
+    padding: 2% 5%;
+    width: 60%;
+    font-size: 1.3rem;
+}

@@ -12,7 +12,7 @@ const SongList = () => {
     const { playPlaylist } = useContext(playPlaylistIndexContext);
     const userId = userAccessToken ? jwt_decode(userAccessToken)._id : null;
     const [isMy, setIsMy] = useState(playPlaylist.createdBy === userId);
-    console.log(playPlaylist);
+    console.log({ playPlaylist });
     return (
         <div className='SongList'>
             <h2 className='play_title'>{playPlaylist.title}</h2>

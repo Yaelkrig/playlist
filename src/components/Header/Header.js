@@ -2,10 +2,14 @@ import './Header.css'
 import jwt_decode from "jwt-decode";
 import { useContext, useEffect, useState } from 'react';
 import UserAceessTokenContext from '../../Contexts/UserAceessTokenContext';
+import { Avatar } from '@mui/material';
+import { useNavigate } from "react-router";
 
 const Header = () => {
-    const { userAccessToken } = useContext(UserAceessTokenContext)
+    const { userAccessToken } = useContext(UserAceessTokenContext);
     const [currentUser, setCurrentUser] = useState("Guest");
+    const navigate = useNavigate()
+
     const userLoged = () => {
         if (userAccessToken) {
             setCurrentUser(jwt_decode(userAccessToken).username)
@@ -21,7 +25,9 @@ const Header = () => {
             <h1>
                 Playlist
             </h1>
-            {currentUser && <span className='name'>Hello {currentUser}</span>}
+            {currentUser &&
+                <Avatar className='profile_icon'
+                    onClick={() => navigate('/profile')}>{currentUser[0]}</Avatar>}
         </div>
     )
 }

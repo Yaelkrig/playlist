@@ -1,0 +1,19 @@
+.playlist {
+    margin-left: 5%;
+    text-align: center;
+    margin-bottom: 5%;
+    cursor: pointer;
+}
+
+.playlist:hover {
+    opacity: 0.6;
+}
+
+.palaylist_img {
+    height: 8.5rem;
+    width: 11rem;
+}
+
+.playlist_title {
+    font-family: 'Courgette', cursive;
+}
