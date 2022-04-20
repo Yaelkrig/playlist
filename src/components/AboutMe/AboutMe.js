@@ -4,8 +4,12 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Tooltip } from '@mui/material';
+import { useEffect } from 'react';
 
 const AboutMe = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     return (
         <div className='about_me_conteiner'>
             <h2 className='about_header'>About Me</h2>
