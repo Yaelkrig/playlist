@@ -15,30 +15,19 @@
     margin-left: 12%;
 }
 
-.icon {
+.Side .icon {
     color: white;
     padding: 10%;
-}
-
-.Side .css-i4bv87-MuiSvgIcon-root {
     border-radius: 50%;
     margin-top: 30%;
     box-sizing: unset;
 }
 
-.Side .css-i4bv87-MuiSvgIcon-root:hover {
+.Side .icon:hover {
     background-color: #00cedc;
     cursor: pointer;
     opacity: 0.5;
 }
-
-/* .Side .MuiIcon-root{
-    
-    border-radius: 50%;
-    margin-left: 10%;
-    padding: 15%;
-    margin-top: 50%;
-} */
 
 .Side .MuiRating-iconHover {
     background-color: #00cedc;
