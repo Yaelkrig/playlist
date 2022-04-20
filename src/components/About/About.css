@@ -1,27 +1,31 @@
-.About{
+.About {
     display: flex;
-    height: 20vh;
+    height: 10%;
     background-color: #62a3a7;
     color: white;
     text-align: center;
     font-family: 'Courgette', cursive;
     margin-bottom: 0% !important;
-    margin-top: 20%;
     flex-direction: column-reverse;
+    margin-top: 21%;
+    margin-bottom: 0%;
 }
 
-.About .created_by{
+.About .created_by {
     font-size: 170%;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 3%;
 }
-.about_link{
+
+.about_link {
     color: white;
     text-decoration: none;
 }
-.about_link:hover{
+
+.about_link:hover {
     opacity: 0.6;
 }
-span:hover{
+
+span:hover {
     cursor: default;
 }
